@@ -1,0 +1,133 @@
+main {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* Hero Section */
+.hero-headline {
+    /* Uses the GREEN accent for the main feature */
+    background-color: lawngreen; 
+    border: 3px solid var(--border-color);
+    border-radius: 12px; /* Soft rounded corners */
+    padding: 30px;
+    font-size: 2.2rem;
+    text-align: center;
+    
+    /* Playful rotation */
+    transform: rotate(-1deg); 
+    margin-bottom: 50px;
+    box-shadow: 8px 8px 0px var(--border-color);
+    cursor: pointer;
+    transition: transform 0.2s;
+    color: var(--text-dark);
+}
+
+.hero-headline:hover {
+    transform: rotate(0deg) scale(1.02);
+    background-color: var(--accent-blue); /* Switches color on hover */
+}
+
+/* Grid System */
+.feed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 35px;
+}
+
+/* Card Styles */
+.card {
+    background-color: var(--bg-card); /* The Soft Cream Color */
+    border: 3px solid var(--border-color);
+    border-radius: 12px; /* Rounded corners like the phone UI */
+    padding: 20px;
+    box-shadow: 6px 6px 0px var(--border-color);
+    transition: transform 0.2s;
+    
+    /* Flex layout to push button to bottom */
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 10px 10px 0px var(--border-color);
+}
+
+.card-image-placeholder {
+    background-color: var(--accent-blue); /* Default blue placeholder */
+    height: 180px;
+    border: 3px solid var(--border-color);
+    border-radius: 8px;
+    display: flex; justify-content: center; align-items: center;
+    font-style: italic; color: var(--text-dark); font-size: 1.2rem; margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Alternate colors for placeholders if you want (requires JS or nth-child) */
+.card:nth-child(even) .card-image-placeholder {
+    background-color: var(--accent-red);
+}
+
+.card h3 {
+    font-size: 1.4rem; margin-bottom: 10px; 
+    color: var(--text-dark);
+}
+
+.card p {
+    font-family: 'Helvetica Neue', Arial, sans-serif; 
+    font-size: 1rem;
+    color: #555; /* Slightly lighter text for reading */
+    margin-top: 0;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    flex-grow: 1; /* Pushes button down */
+}
+
+.card a {
+    text-decoration: none;
+}
+
+.read-more-btn {
+    display: block; width: 100%; padding: 12px;
+    background-color: var(--bg-main); /* Yellow Button */
+    border: 3px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-dark); 
+    font-family: 'Arial Black', sans-serif;
+    font-size: 1rem; cursor: pointer; text-transform: uppercase;
+    box-shadow: 3px 3px 0px var(--border-color);
+}
+
+.read-more-btn:hover { 
+    background-color: var(--accent-red); /* Turns Red on hover */
+    color: white;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0px var(--border-color);
+}
+
+/* --- RAINBOW CARD LOGIC --- */
+
+/* 1. BLUE CARD (1st, 7th, 13th...) */
+.card:nth-child(6n+1) .card-image-placeholder { background-color: var(--accent-blue); }
+.card:nth-child(6n+1) .read-more-btn:hover { background-color: var(--accent-blue); color: white; }
+
+/* 2. RED CARD (2nd, 8th, 14th...) */
+.card:nth-child(6n+2) .card-image-placeholder { background-color: var(--accent-red); }
+.card:nth-child(6n+2) .read-more-btn:hover { background-color: var(--accent-red); color: white; }
+
+/* 3. GREEN CARD (3rd, 9th, 15th...) */
+.card:nth-child(6n+3) .card-image-placeholder { background-color: var(--accent-green); }
+.card:nth-child(6n+3) .read-more-btn:hover { background-color: var(--accent-green); color: black; }
+
+/* 4. PURPLE CARD (4th, 10th, 16th...) */
+.card:nth-child(6n+4) .card-image-placeholder { background-color: var(--accent-purple); }
+.card:nth-child(6n+4) .read-more-btn:hover { background-color: var(--accent-purple); color: white; }
+
+/* 5. ORANGE CARD (5th, 11th, 17th...) */
+.card:nth-child(6n+5) .card-image-placeholder { background-color: var(--accent-orange); }
+.card:nth-child(6n+5) .read-more-btn:hover { background-color: var(--accent-orange); color: black; }
+
+/* 6. TEAL CARD (6th, 12th, 18th...) */
+.card:nth-child(6n+6) .card-image-placeholder { background-color: var(--accent-teal); }
+.card:nth-child(6n+6) .read-more-btn:hover { background-color: var(--accent-teal); color: white; }
