@@ -1,23 +1,13 @@
 [
-  {
-    "id": 1,
-    "title": "The 2025 Meme Rewind: The 12 Viral Moments That Defined the Year",
-    "excerpt": "The definitive ranking of 2025's best memes. From the '6-7' trend and Steve the Fish to the Coldplay Kiss Cam, explore the 12 viral moments that broke the internet this year.",
-    "category": "Memes",
-    "image": "six-seven-67.gif",
-    "link": "/articles/2025/the-2025-meme-rewind-the-12-viral-moments-that-defined-the-year.html",
-    "isFeatured": true,
-    "date": "2025-12-31",
-    "author": "Ruthvik Reddy"
-  },
-  {
-    "id": 2,
-    "title": "Rumor: Half Life 3 with the 2026 Steam Machine Launch?",
-    "excerpt": "Reports indicate Valve aims to bundle the long-awaited sequel, possibly titled Half-Life: Xen, with a next-gen console in 2026. However, since volatile RAM prices are driving up manufacturing costs, which could delay the hardware and the game.",
-    "category": "Video Games",
-    "image": "split.jpg",
-    "link": "/articles/2025/celeb-split.html",
-    "isFeatured": false,
-    "date": "12-20-2025"
-  }
+    {
+        "id": 1,
+        "title": "The 2025 Meme Rewind: The 12 Viral Moments That Defined the Year",
+        "excerpt": "The definitive ranking of 2025's best memes. From the '6-7' trend and Steve the Fish to the Coldplay Kiss Cam, explore the 12 viral moments that broke the internet this year.",
+        "category": "Memes",
+        "image": "six-seven-67.gif",
+        "link": "/articles/2025/the-2025-meme-rewind-the-12-viral-moments-that-defined-the-year.html",
+        "isFeatured": true,
+        "date": "2025-12-31",
+        "author": "Ruthvik Reddy"
+    }
 ]
