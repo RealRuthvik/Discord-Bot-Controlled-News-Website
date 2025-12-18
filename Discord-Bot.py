@@ -64,7 +64,7 @@ def generate_html_file(article_data):
     <meta name="description" content="{article_data['excerpt']}">
     <meta property="og:title" content="{article_data['title']}">
     <meta property="og:description" content="{article_data['excerpt']}">
-    <title>{article_data['title']}</title>
+    <title>{article_data['title']} | The Internet Arcade</title>
     <link rel="stylesheet" href="/assets/css/style.css">
     
     <style>
