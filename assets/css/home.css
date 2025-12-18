@@ -4,7 +4,6 @@ main {
     padding: 20px;
 }
 
-/* Hero Section */
 .hero-headline {
     background-color: lawngreen; 
     border: 3px solid var(--border-color);
@@ -25,14 +24,12 @@ main {
     background-color: var(--accent-blue);
 }
 
-/* Grid System */
 .feed-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 35px;
 }
 
-/* Card Styles */
 .card {
     background-color: var(--bg-card);
     border: 3px solid var(--border-color);
@@ -49,19 +46,16 @@ main {
     box-shadow: 10px 10px 0px var(--border-color);
 }
 
-/* --- FIXED IMAGE STYLES --- */
 .card-image-placeholder {
     width: 100%;
-    /* Forces the 16:9 YouTube-style rectangle */
     aspect-ratio: 16 / 9; 
     overflow: hidden;
     border: 3px solid var(--border-color);
     border-radius: 8px;
     margin-bottom: 20px;
-    background-color: var(--text-dark); /* Dark background while loading */
+    background-color: var(--text-dark);
 }
 
-/* Ensures the image fills the box perfectly */
 .card-image-placeholder img {
     width: 100%;
     height: 100%;

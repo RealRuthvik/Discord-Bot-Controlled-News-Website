@@ -1,39 +1,25 @@
-/* --- THE "MEMPHIS RETRO" PALETTE --- */
 :root {
-    /* 1. The Background: Warm Marigold instead of Neon Lemon */
-    --bg-main: #FFC400;       
-    
-    /* 2. The Cards: Soft Cream/Eggshell (Not harsh white) */
-    --bg-card: #FFF8F0;       
-    
-    /* 3. The Header: We'll keep pink, but make it a "Bubblegum" pink to match the playful vibe */
-    --bg-header: #FF90E8;     
-    
-    /* 4. Accents pulled from your reference image */
-    --accent-blue: #64B5F6;   /* The blue triangle color */
-    --accent-green: #81C784;  /* The green square color */
-    --accent-red: #FF6B6B;    /* The red shape color */
-    --accent-purple: #BA68C8; /* New: Orchid */
-    --accent-orange: #FFB74D; /* New: Muted Orange */
-    --accent-teal: #4DB6AC;   /* New: Retro Teal */
-    
-    /* 5. Text: Charcoal instead of pure black */
-    --text-dark: #2D2D2D;     
-    --border-color: #2D2D2D;  
+    --bg-main: #FFC400;
+    --bg-card: #FFF8F0;
+    --bg-header: #FF90E8;
+    --accent-blue: #64B5F6;
+    --accent-green: #81C784;
+    --accent-red: #FF6B6B;
+    --accent-purple: #BA68C8;
+    --accent-orange: #FFB74D;
+    --accent-teal: #4DB6AC;
+    --text-dark: #2D2D2D;
+    --border-color: #2D2D2D;
 }
 
-/* --- CORE STYLES --- */
 body {
-    font-family: 'Helvetica Neue', 'Arial', sans-serif; /* Cleaner, rounder font */
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
     background-color: var(--bg-main);
     color: var(--text-dark);
     margin: 0;
     padding: 0;
-    
-    /* --- THE POLKA DOT PATTERN --- */
-    /* This creates the grid of dots seen in your image */
     background-image: radial-gradient(var(--text-dark) 1.5px, transparent 1.5px);
-    background-size: 25px 25px; /* Spacing between dots */
+    background-size: 25px 25px;
     background-position: 0 0;
 }
 
@@ -44,7 +30,6 @@ h1, h2, h3 {
     font-weight: 900;
 }
 
-/* --- HEADER STYLES --- */
 header {
     background-color: var(--bg-header);
     border-bottom: 4px solid var(--border-color);
@@ -55,7 +40,7 @@ header {
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0px 4px 0px rgba(0,0,0,0.15); /* Softer shadow */
+    box-shadow: 0px 4px 0px rgba(0,0,0,0.15);
 }
 
 .brand { 
@@ -63,11 +48,9 @@ header {
     font-style: italic;
     font-weight: 900;
     color: var(--text-dark);
-    /* A hard white shadow to make text pop against pink */
     text-shadow: 3px 3px 0px var(--bg-card);
 }
 
-/* --- NAV LINKS (The "Folder Tab" Look) --- */
 nav a {
     text-decoration: none; 
     color: var(--text-dark); 
@@ -75,26 +58,19 @@ nav a {
     margin-left: 12px; 
     border: 3px solid var(--border-color); 
     padding: 8px 18px;
-    
-    /* Cream background like your reference */
     background-color: var(--bg-card); 
-    
-    /* Slight rounding for a "sticker" feel */
     border-radius: 8px; 
-    
     box-shadow: 4px 4px 0px var(--border-color);
     transition: transform 0.1s, box-shadow 0.1s;
     display: inline-block;
 }
 
 nav a:hover {
-    /* Hover turns buttons blue/cyan like the shapes in your image */
     background-color: var(--accent-blue); 
     transform: translate(-2px, -2px);
     box-shadow: 6px 6px 0px var(--border-color);
 }
 
-/* --- FOOTER STYLES --- */
 footer {
     margin-top: 50px; 
     text-align: center; 
@@ -105,7 +81,6 @@ footer {
     font-weight: bold;
 }
 
-/* --- MOBILE MENU --- */
 #mobile-menu-btn { display: none; }
 
 @media (max-width: 950px) {
@@ -151,11 +126,10 @@ footer {
     }
 }
 
-/* --- THEME TOGGLE BUTTON STYLE --- */
 #theme-toggle {
     background: var(--bg-card);
     border: 3px solid var(--border-color);
-    border-radius: 50%; /* Circle shape */
+    border-radius: 50%;
     width: 45px;
     height: 45px;
     font-size: 1.2rem;
@@ -172,24 +146,20 @@ footer {
     box-shadow: 1px 1px 0px var(--border-color);
 }
 
-/* --- SEARCH BAR STYLES --- */
-
-/* Wrapper to make the search bar take up available space */
 .search-wrapper {
     flex-grow: 1;
-    margin: 0 2rem; /* Space between logo and nav */
+    margin: 0 2rem;
     display: flex;
     justify-content: center;
-    max-width: 600px; /* Prevents it from getting too wide on huge screens */
+    max-width: 600px;
 }
 
 #search-form {
     width: 100%;
     display: flex;
-    gap: 8px; /* Space between input and button */
+    gap: 8px; 
 }
 
-/* Retro Input Field */
 #search-input {
     width: 100%;
     padding: 10px 15px;
@@ -198,16 +168,15 @@ footer {
     border: 3px solid var(--border-color);
     border-radius: 8px;
     background-color: var(--bg-card);
-    box-shadow: 4px 4px 0px rgba(0,0,0,0.1); /* Subtle shadow */
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.1); 
     outline: none;
     transition: box-shadow 0.1s;
 }
 
 #search-input:focus {
-    box-shadow: 4px 4px 0px var(--accent-blue); /* Highlights on focus */
+    box-shadow: 4px 4px 0px var(--accent-blue); 
 }
 
-/* Retro Search Button */
 #search-btn {
     background-color: var(--accent-green);
     border: 3px solid var(--border-color);
@@ -224,15 +193,11 @@ footer {
     box-shadow: 2px 2px 0px var(--border-color);
 }
 
-/* --- MOBILE ADJUSTMENTS --- */
 @media (max-width: 768px) {
-    /* Hide the long search bar in the header on mobile to save space */
-    /* It will move into the dropdown menu via JS or CSS logic if preferred */
     .search-wrapper {
         display: none; 
     }
     
-    /* If you want the search bar INSIDE the mobile menu */
     #main-nav .search-wrapper {
         display: block;
         margin: 15px auto;

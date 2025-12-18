@@ -303,7 +303,6 @@
             e.preventDefault();
             const formData = new FormData(this);
 
-            // Updated score categories
             let scores = {
                 toddler: 0,
                 kid: 0,
@@ -342,11 +341,8 @@
                 onepercent: "THE COSMIC 1%"
             };
 
-            // Hide UI
             this.style.display = 'none';
             document.getElementById('funny-message').style.display = 'none';
-
-            // Update Result UI (Matching your Seven Sins IDs)
             document.getElementById('result-display').style.display = 'block';
             document.getElementById('result-display').style.backgroundColor = 'var(--accent-purple)'; // Change color for vibe
 

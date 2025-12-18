@@ -9,12 +9,10 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/home.css">
     <style>
-        /* Maintain grid spacing now that the hero is gone */
         main {
             padding-top: 20px;
         }
 
-        /* Grid Image Handling */
         .quiz-card-image {
             width: 250px;
             height: 250px;
@@ -67,7 +65,6 @@
         function renderQuizzes(list) {
             const feedContainer = document.getElementById('quiz-feed-container');
 
-            // Render only the Grid
             feedContainer.innerHTML = list.map(q => {
                 const visualGrid = q.image
                     ? `<img src="${q.image}" class="quiz-card-image" alt="${q.title}">`
@@ -95,7 +92,6 @@
         document.addEventListener("DOMContentLoaded", () => {
             renderQuizzes(allQuizzes);
 
-            // Simplified search handler
             document.addEventListener('submit', function (e) {
                 if (e.target && e.target.id === 'search-form') {
                     e.preventDefault();
