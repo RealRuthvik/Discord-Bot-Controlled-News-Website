@@ -1,15 +1,20 @@
 document.addEventListener("DOMContentLoaded", async function() {
-    // 1. Determine which header to load based on the current page
-    const isHomePage = window.location.pathname === '/' || window.location.pathname.endsWith('index.html');
-    const headerPath = isHomePage ? '/components/header.html' : '/components/header-articles.html';
+    const path = window.location.pathname;
+    const isHomePage = path === '/' || path.endsWith('index.html');
+    const isQuizzesHome = path.endsWith('quizzes.html');
 
-    // 2. Load components concurrently for better performance
+    let headerPath = '/components/header-articles.html';
+    if (isHomePage) {
+        headerPath = '/components/header.html';
+    } else if (isQuizzesHome) {
+        headerPath = '/components/header-quizzes.html';
+    }
+
     await Promise.all([
         loadComponent('header-placeholder', headerPath),
         loadComponent('footer-placeholder', '/components/footer.html')
     ]);
 
-    // 3. Mobile Menu Logic (unchanged to preserve functionality)
     document.addEventListener('click', function(e) {
         const btn = e.target.closest('#mobile-menu-btn');
         if (btn) {
@@ -21,9 +26,6 @@ document.addEventListener("DOMContentLoaded", async function() {
     });
 });
 
-/**
- * Optimized async component loader
- */
 async function loadComponent(elementId, filePath) {
     try {
         const response = await fetch(filePath);

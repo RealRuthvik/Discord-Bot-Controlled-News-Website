@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Only 1% Can Pass This Mental Age Test | Tsip 💅</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/home.css">
+    <style>
+        main {
+            display: flex;
+            justify-content: center;
+            padding: 20px 20px;
+        }
+
+        .quiz-container {
+            background-color: var(--bg-card);
+            border: 4px solid var(--border-color);
+            padding: 2.5rem;
+            max-width: 750px;
+            width: 100%;
+            box-shadow: 12px 12px 0px var(--accent-purple);
+        }
+
+        .funny-header {
+            background-color: #ff6720;
+            border: 4px solid var(--border-color);
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 40px;
+            transform: rotate(-1.5deg);
+            box-shadow: 6px 6px 0px var(--border-color);
+            text-shadow: 2px 2px 0px rgb(248, 221, 255);
+        }
+
+        .funny-header h1 {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .funny-header p {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 1rem;
+            margin: 0;
+            color: #ffffff;
+            text-shadow: 2px 2px 0px black;
+        }
+
+        .question-item {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px dashed var(--border-color);
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            margin: 10px 0;
+            background: white;
+            border: 3px solid var(--border-color);
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .option-label:hover {
+            background: var(--accent-blue);
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0px black;
+        }
+
+        input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--text-dark);
+        }
+
+        /* Result Display Styles */
+        #result-display {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            padding: 30px;
+            border: 5px solid var(--border-color);
+            background-color: var(--accent-green);
+            box-shadow: 10px 10px 0px black;
+        }
+
+        .sin-title {
+            font-size: 3.5rem;
+            color: var(--text-dark);
+            text-shadow: 3px 3px 0px white;
+            margin: 15px 0;
+        }
+
+        /* Fix for the Retake Button hover state */
+        .retake-btn {
+            background-color: white !important;
+            color: var(--text-dark) !important;
+            margin-top: 20px;
+        }
+
+        .retake-btn:hover {
+            background-color: var(--accent-blue) !important;
+            /* Changed from white to blue on hover */
+            color: white !important;
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0px black !important;
+        }
+
+        .back-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .back-btn {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 15px 30px;
+            font-weight: 900;
+            text-decoration: none;
+            text-transform: uppercase;
+            border: 3px solid transparent;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--accent-green);
+            color: var(--text-dark);
+            border: 3px solid var(--border-color);
+            box-shadow: 5px 5px 0px var(--border-color);
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="quiz-container">
+            <div class="funny-header" id="funny-message">
+                <h1>Only 1% Can Pass This Mental Age Test: What is Your Brain’s Real Age? (2026 Edition)</h1>
+                <p>Don't worry, if the result says you're 8 years old, we won't tell your boss. They probably already
+                    suspected it.</p>
+                <img src="/assets/media/image/Only-1-percent-mental-age-test-wide.png" alt="Which Sin Are You?"
+                    style="width: 50%; height: 50%; object-fit: cover; display: block; padding-top: 7.5px; justify-self: center;">
+            </div>
+
+            <form id="quiz-form">
+                <div class="quiz-list">
+                    <div class="quiz-list">
+                        <div class="question-item">
+                            <h2>1. A new social media app just dropped. What do you do?</h2>
+                            <label class="option-label"><input type="radio" name="q1" value="kid" required> Download it
+                                immediately and post a dance I don't know.</label>
+                            <label class="option-label"><input type="radio" name="q1" value="millennial"> Read a
+                                think-piece about how it's destroying society, then download it anyway.</label>
+                            <label class="option-label"><input type="radio" name="q1" value="boomer"> Ask my nephew why
+                                the "blue button" on my phone is gone.</label>
+                            <label class="option-label"><input type="radio" name="q1" value="ancient"> I still
+                                communicate via carrier pigeon and meaningful silences.</label>
+                        </div>
+
+                        <div class="question-item">
+                            <h2>2. It’s 9:00 PM on a Tuesday. Where are you?</h2>
+                            <label class="option-label"><input type="radio" name="q2" value="toddler" required> Running
+                                around the living room for no reason at all.</label>
+                            <label class="option-label"><input type="radio" name="q2" value="teen"> On my 4th hour of
+                                'scrolling the void' in total darkness.</label>
+                            <label class="option-label"><input type="radio" name="q2" value="millennial"> In bed. Not
+                                sleeping, just 'bed-rotting' with my heated blanket.</label>
+                            <label class="option-label"><input type="radio" name="q2" value="boomer"> Fast asleep. I’ve
+                                been up since 4:00 AM for the early bird specials.</label>
+                        </div>
+
+                        <div class="question-item">
+                            <h2>3. You see a "Self-Checkout" machine with a long line.</h2>
+                            <label class="option-label"><input type="radio" name="q3" value="onepercent" required> I use
+                                my mind to scan the barcodes. I am the machine.</label>
+                            <label class="option-label"><input type="radio" name="q3" value="boomer"> I start an
+                                argument with the machine because it 'stole a human job'.</label>
+                            <label class="option-label"><input type="radio" name="q3" value="teen"> I put on
+                                noise-canceling headphones and pretend I’m in a music video.</label>
+                            <label class="option-label"><input type="radio" name="q3" value="kid"> I try to scan my hand
+                                to see if it lists a price for 'Human'.</label>
+                        </div>
+
+                        <div class="question-item">
+                            <h2>4. What is the ultimate snack?</h2>
+                            <label class="option-label"><input type="radio" name="q4" value="toddler" required> A single
+                                piece of cheese and a juice box.</label>
+                            <label class="option-label"><input type="radio" name="q4" value="millennial"> An expensive
+                                avocado toast that is the reason I can't buy a house.</label>
+                            <label class="option-label"><input type="radio" name="q4" value="ancient"> Hardened bread
+                                and the wisdom of the elders.</label>
+                            <label class="option-label"><input type="radio" name="q4" value="kid"> Anything that turns
+                                my tongue a color not found in nature.</label>
+                        </div>
+
+                        <div class="question-item">
+                            <h2>5. Someone is "wrong" on the internet. Your reaction?</h2>
+                            <label class="option-label"><input type="radio" name="q5" value="teen" required> Type a
+                                50-paragraph response with 0 punctuation.</label>
+                            <label class="option-label"><input type="radio" name="q5" value="onepercent"> I simply
+                                delete the internet in my own mind. Problem solved.</label>
+                            <label class="option-label"><input type="radio" name="q5" value="boomer"> I share it on my
+                                wall with the caption "SAD! UNBELIEVABLE!"</label>
+                            <label class="option-label"><input type="radio" name="q5" value="ancient"> I have seen
+                                empires fall for less. I shall say nothing.</label>
+                        </div>
+
+                        <div class="question-item">
+                            <h2>6. Pick a vibe/aesthetic:</h2>
+                            <label class="option-label"><input type="radio" name="q6" value="millennial" required>
+                                Overpriced beige furniture and a 'Live, Laugh, Love' sign.</label>
+                            <label class="option-label"><input type="radio" name="q6" value="teen"> Neon lights, fast
+                                fashion, and a general sense of doom.</label>
+                            <label class="option-label"><input type="radio" name="q6" value="toddler"> Pajamas with feet
+                                in them and a sticky face.</label>
+                            <label class="option-label"><input type="radio" name="q6" value="onepercent"> Floating in a
+                                white void while wearing a toga.</label>
+                        </div>
+
+                        <div class="question-item">
+                            <h2>7. You find a gray hair. What happens next?</h2>
+                            <label class="option-label"><input type="radio" name="q7" value="teen" required> Immediate
+                                existential crisis. Life is over at 19.</label>
+                            <label class="option-label"><input type="radio" name="q7" value="boomer"> I have 4 left, and
+                                I’m proud of all of them.</label>
+                            <label class="option-label"><input type="radio" name="q7" value="ancient"> My hair turned
+                                silver during the Great Frost of 1402.</label>
+                            <label class="option-label"><input type="radio" name="q7" value="millennial"> I spend $200
+                                on 'anti-aging' serum made of snail tears.</label>
+                        </div>
+
+                        <label class="question-item">
+                            <h2>8. How do you handle a "Check Engine" light?</h2>
+                            <label class="option-label"><input type="radio" name="q8" value="toddler" required> I put a
+                                sticker over it. Now it's a happy light.</label>
+                            <label class="option-label"><input type="radio" name="q8" value="millennial"> I google 'How
+                                long can I drive with this light on' and pray.</label>
+                            <label class="option-label"><input type="radio" name="q8" value="boomer"> I open the hood,
+                                stare at the engine, and grunt knowingly.</label>
+                            <label class="option-label"><input type="radio" name="q8" value="onepercent"> I am the
+                                engine. I fix it with a thought.</label>
+                        </label>
+
+                        <div class="question-item">
+                            <h2>9. You are offered a "Mystery Box".</h2>
+                            <label class="option-label"><input type="radio" name="q9" value="kid" required> OPEN IT OPEN
+                                IT OPEN IT.</label>
+                            <label class="option-label"><input type="radio" name="q9" value="millennial"> I check the
+                                return policy and the reviews first.</label>
+                            <label class="option-label"><input type="radio" name="q9" value="ancient"> It’s probably a
+                                trap set by a trickster god. I decline.</label>
+                            <label class="option-label"><input type="radio" name="q9" value="teen"> I film an 'unboxing'
+                                video even if there's nothing in it.</label>
+                        </div>
+
+                        <div class="question-item">
+                            <h2>10. Finally, how do you feel about 2026?</h2>
+                            <label class="option-label"><input type="radio" name="q10" value="onepercent" required> It
+                                is but a blink in the eye of eternity.</label>
+                            <label class="option-label"><input type="radio" name="q10" value="boomer"> Everything was
+                                better in 1974.</label>
+                            <label class="option-label"><input type="radio" name="q10" value="teen"> I’m just here for
+                                the memes and the inevitable robot uprising.</label>
+                            <label class="option-label"><input type="radio" name="q10" value="millennial"> I just want
+                                to know if I'll ever be able to afford eggs.</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="submit-container">
+                    <button type="submit" class="read-more-btn" style="width: 100%; font-size: 1.5rem;">REVEAL MY
+                        TRUTH</button>
+                </div>
+            </form>
+
+            <div id="result-display">
+                <h2 style="background: none; border: none; box-shadow: none;">Your Primary Sin is...</h2>
+                <div class="sin-title" id="final-sin"></div>
+                <p id="sin-description" style="font-weight: bold; font-size: 1.2rem;"></p>
+                <button class="read-more-btn retake-btn" onclick="location.reload()">RETAKE & LIE AGAIN</button>
+            </div>
+
+            <div class="back-container">
+                <a href="/quizzes.html" class="back-btn">⬅ Discover More Quizzes</a>
+            </div>
+        </div>
+    </main>
+    <div id="footer-placeholder"></div>
+
+    <script src="/assets/js/global.js"></script>
+    <script>
+        document.getElementById('quiz-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            // Updated score categories
+            let scores = {
+                toddler: 0,
+                kid: 0,
+                teen: 0,
+                millennial: 0,
+                boomer: 0,
+                ancient: 0,
+                onepercent: 0
+            };
+
+            for (let value of formData.values()) {
+                if (scores[value] !== undefined) {
+                    scores[value]++;
+                }
+            }
+
+            const winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+
+            const descriptions = {
+                toddler: "Your mental age is 4. You are fueled by pure joy, mystery stains on your shirt, and a refusal to nap. The world is your playground.",
+                kid: "Your mental age is 10. You probably have a YouTube channel with 3 subscribers and think 'skibidi' is a valid sentence structure.",
+                teen: "Your mental age is 16. Everything is 'mid,' everyone is 'cringe,' and you are currently the main character of a movie that doesn't exist.",
+                millennial: "Your mental age is 32. You are tired, your back hurts for no reason, and you've recently considered buying a specific brand of dish soap because it was on sale.",
+                boomer: "Your mental age is 65. You want to speak to the manager of the internet. You also type with one finger and are suspicious of 'The Cloud'.",
+                ancient: "Your mental age is 2,000. You are a soul from the old world. You find modern technology loud and miss the simplicity of the Bronze Age.",
+                onepercent: "You are the 1%. Your mental age is 'Ascended'. You have reached a level of consciousness where age is a myth and your brain is a supercomputer."
+            };
+
+            const ageTitles = {
+                toddler: "THE CHAOTIC TODDLER",
+                kid: "THE iPAD KID",
+                teen: "THE ANGSTY TEEN",
+                millennial: "THE BURNT-OUT MILLENNIAL",
+                boomer: "THE 'BACK IN MY DAY' BOOMER",
+                ancient: "THE ANCIENT DEITY",
+                onepercent: "THE COSMIC 1%"
+            };
+
+            // Hide UI
+            this.style.display = 'none';
+            document.getElementById('funny-message').style.display = 'none';
+
+            // Update Result UI (Matching your Seven Sins IDs)
+            document.getElementById('result-display').style.display = 'block';
+            document.getElementById('result-display').style.backgroundColor = 'var(--accent-purple)'; // Change color for vibe
+
+            const titleElement = document.querySelector('#result-display h2');
+            if (titleElement) titleElement.innerText = "Your Brain's Real Age is...";
+
+            document.getElementById('final-sin').innerText = ageTitles[winner];
+            document.getElementById('sin-description').innerText = descriptions[winner];
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+
+</html>

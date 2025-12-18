@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUIZZES 🧠 | Tsip 💅</title>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/home.css">
+    <style>
+        /* Maintain grid spacing now that the hero is gone */
+        main {
+            padding-top: 20px;
+        }
+
+        /* Grid Image Handling */
+        .quiz-card-image {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border: 4px solid black;
+        }
+        .quiz-card-icon {
+            font-size: 4rem;
+            color: white;
+            text-shadow: 4px 4px 0px black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="header-placeholder"></div>
+
+    <main>
+        <div id="quiz-feed-container" class="feed-grid"></div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="assets/js/global.js"></script>
+    <script>
+        const allQuizzes = [
+            {
+                id: 1,
+                title: "Which Seven Deadly Sins Character Are You? (2026 Edition)",
+                excerpt: "Only 1% survive this truth. Our 2026 test swaps old sins for digital habits. Discover if you're a \"Professional Lurker\" or a \"Digital Hoarder.\" It’s unhinged and more accurate than therapy. Reveal your truth now.",
+                category: "Personality",
+                date: "2025-12-18",
+                link: "/quizzes/which-one-of-the-seven-deadly-sins-are-you-2026-edition.html",
+                image: "assets/media/image/the-seven-deadly-sins-quiz-which-sin-are-you.png",
+                color: "#BA68C8"
+            },
+            {
+                id: 2,
+                title: "Only 1% Can Pass This Mental Age Test: What is Your Brain’s Real Age? (2026 Edition)",
+                excerpt: "Think your mind matches your birth year? Most people fail this 2025 Mental Age Test. Take the viral quiz to reveal how old your brain actually is!",
+                category: "Vibe Check",
+                date: "2025-12-20",
+                link: "/quizzes/only-1-percent-mental-age-test.html",
+                image: "assets/media/image/only-1-percent-mental-age-test-square.png",
+                color: "#FF6B6B"
+            }
+        ];
+
+        function renderQuizzes(list) {
+            const feedContainer = document.getElementById('quiz-feed-container');
+
+            // Render only the Grid
+            feedContainer.innerHTML = list.map(q => {
+                const visualGrid = q.image
+                    ? `<img src="${q.image}" class="quiz-card-image" alt="${q.title}">`
+                    : `<div class="card-image-placeholder" style="background-color: ${q.color}; height: 200px; display: flex; align-items: center; justify-content: center;">
+                        <span class="quiz-card-icon">?</span>
+                       </div>`;
+
+                return `
+                <article class="card">
+                    ${visualGrid}
+                    <div style="padding: 20px;">
+                        <div style="margin-bottom: 12px;">
+                            <span class="meta-tag" style="font-size: 0.8rem; background-color: #ff6b6b; padding: 2px 8px; border: 2px solid black; font-weight: bold;">${q.category}</span>
+                            
+                        </div>
+                        <h3 style="margin-bottom: 10px; font-size: 1.2rem;">${q.title}</h3>
+                        <p style="font-size: 0.9rem; color: #444; margin-bottom: 20px;">${q.excerpt}</p>
+                        <a href="${q.link}"><button class="read-more-btn" style="width: 100%;">START QUIZ</button></a>
+                    </div>
+                </article>
+            `;
+            }).join('');
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderQuizzes(allQuizzes);
+
+            // Simplified search handler
+            document.addEventListener('submit', function (e) {
+                if (e.target && e.target.id === 'search-form') {
+                    e.preventDefault();
+                    const query = document.getElementById('search-input').value.toLowerCase();
+                    const filtered = allQuizzes.filter(q =>
+                        q.title.toLowerCase().includes(query) || q.category.toLowerCase().includes(query)
+                    );
+                    renderQuizzes(filtered);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

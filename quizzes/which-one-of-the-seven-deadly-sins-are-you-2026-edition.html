@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Seven Deadly Sins | Tsip 💅</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/home.css">
+    <style>
+        main {
+            display: flex;
+            justify-content: center;
+            padding: 20px 20px;
+        }
+
+        .quiz-container {
+            background-color: var(--bg-card);
+            border: 4px solid var(--border-color);
+            padding: 2.5rem;
+            max-width: 750px;
+            width: 100%;
+            box-shadow: 12px 12px 0px var(--accent-purple);
+        }
+
+        /* The Funny Message Header */
+        .funny-header {
+            background-color: #FAFF00;
+            border: 4px solid var(--border-color);
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 40px;
+            transform: rotate(-1.5deg);
+            box-shadow: 6px 6px 0px var(--border-color);
+        }
+
+        .funny-header h1 {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .funny-header p {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 1rem;
+            margin: 0;
+            color: var(--accent-red);
+        }
+
+        .question-item {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px dashed var(--border-color);
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            margin: 10px 0;
+            background: white;
+            border: 3px solid var(--border-color);
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .option-label:hover {
+            background: var(--accent-blue);
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0px black;
+        }
+
+        input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--text-dark);
+        }
+
+        /* Result Display Styles */
+        #result-display {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            padding: 30px;
+            border: 5px solid var(--border-color);
+            background-color: var(--accent-green);
+            box-shadow: 10px 10px 0px black;
+        }
+
+        .sin-title {
+            font-size: 3.5rem;
+            color: var(--text-dark);
+            text-shadow: 3px 3px 0px white;
+            margin: 15px 0;
+        }
+
+        /* Fix for the Retake Button hover state */
+        .retake-btn {
+            background-color: white !important;
+            color: var(--text-dark) !important;
+            margin-top: 20px;
+        }
+
+        .retake-btn:hover {
+            background-color: var(--accent-blue) !important;
+            /* Changed from white to blue on hover */
+            color: white !important;
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0px black !important;
+        }
+
+        .back-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .back-btn {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 15px 30px;
+            font-weight: 900;
+            text-decoration: none;
+            text-transform: uppercase;
+            border: 3px solid transparent;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--accent-green);
+            color: var(--text-dark);
+            border: 3px solid var(--border-color);
+            box-shadow: 5px 5px 0px var(--border-color);
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="quiz-container">
+            <div class="funny-header" id="funny-message">
+                <h1>Which Seven Deadly Sins Character Are You? [2026 Edition]</h1>
+                <p>Checking your browser history would have been faster, but sure, let’s do this instead.</p>
+                <img src="/assets/media/image/the-seven-deadly-sins-quiz-which-sin-are-you.png" alt="Which Sin Are You?"
+                    style="width: 50%; height: 50%; object-fit: cover; display: block; padding-top: 7.5px; justify-self: center;">
+            </div>
+
+            <form id="quiz-form">
+                <div class="quiz-list">
+                    <div class="question-item">
+                        <h2>1. You post a banger photo and it gets zero likes in the first 10 minutes. Your move?</h2>
+                        <label class="option-label"><input type="radio" name="q1" value="pride" required> Delete it. The
+                            world clearly isn't ready for this level of excellence.</label>
+                        <label class="option-label"><input type="radio" name="q1" value="envy"> Refresh my rival's page
+                            to see why their mid post has 200 likes.</label>
+                        <label class="option-label"><input type="radio" name="q1" value="wrath"> Throw my phone across
+                            the room. The algorithm is personal.</label>
+                        <label class="option-label"><input type="radio" name="q1" value="sloth"> Leave it. I’m already
+                            napping and forgot I posted it.</label>
+                    </div>
+
+                    <div class="question-item">
+                        <h2>2. The fire alarm is going off. What are you grabbing?</h2>
+                        <label class="option-label"><input type="radio" name="q2" value="sloth" required> Nothing. If
+                            it’s my time, it’s my time. Let me sleep.</label>
+                        <label class="option-label"><input type="radio" name="q2" value="greed"> My laptop, my backup
+                            laptop, and the neighbor's fancy bike on the way out.</label>
+                        <label class="option-label"><input type="radio" name="q2" value="gluttony"> The entire contents
+                            of the snack drawer. It's a long walk to the assembly point.</label>
+                        <label class="option-label"><input type="radio" name="q2" value="lust"> My "going out" outfit.
+                            If I’m being rescued, I’m being rescued in style.</label>
+                    </div>
+
+                    <div class="question-item">
+                        <h2>3. You’re at a wedding with a "Free Cupcake" tower. How many are you taking?</h2>
+                        <label class="option-label"><input type="radio" name="q3" value="gluttony" required> I am the
+                            tower now. I am the cupcake king.</label>
+                        <label class="option-label"><input type="radio" name="q3" value="greed"> Four for now, and six
+                            hidden in my jacket for later profit.</label>
+                        <label class="option-label"><input type="radio" name="q3" value="pride"> None. Sugar is for
+                            commoners and people with weak jawlines.</label>
+                        <label class="option-label"><input type="radio" name="q3" value="envy"> I’m just staring at the
+                            person who got the one with the extra sprinkles.</label>
+                    </div>
+
+                    <div class="question-item">
+                        <h2>4. Someone sends you an email that says "As per my last email..."</h2>
+                        <label class="option-label"><input type="radio" name="q4" value="wrath" required> Typing a
+                            response so aggressive the keyboard starts smoking.</label>
+                        <label class="option-label"><input type="radio" name="q4" value="sloth"> Marking it as 'Read'
+                            and ignoring it for three to five business years.</label>
+                        <label class="option-label"><input type="radio" name="q4" value="lust"> Replying with a wink
+                            emoji just to make it weird and chaotic.</label>
+                        <label class="option-label"><input type="radio" name="q4" value="pride"> Correcting their
+                            grammar in the reply to assert dominance.</label>
+                    </div>
+
+                    <div class="question-item">
+                        <h2>5. Your friend gets a massive promotion and a 50% raise. Your reaction?</h2>
+                        <label class="option-label"><input type="radio" name="q5" value="envy" required> "Must be nice."
+                            (Proceeds to spend 4 hours hate-scrolling their LinkedIn).</label>
+                        <label class="option-label"><input type="radio" name="q5" value="greed"> "Cool, so you're paying
+                            for dinner tonight? And tomorrow?"</label>
+                        <label class="option-label"><input type="radio" name="q5" value="wrath"> I’m quitting. If they
+                            can do it, the system is clearly rigged against me.</label>
+                        <label class="option-label"><input type="radio" name="q5" value="pride"> Tell them you actually
+                            turned down that same job because it was "too easy."</label>
+                    </div>
+
+                    <div class="question-item">
+                        <h2>6. You see a "Do Not Touch: Wet Paint" sign. What is your internal monologue?</h2>
+                        <label class="option-label"><input type="radio" name="q6" value="lust" required> I’ve never
+                            wanted to touch something more in my entire life. Rules are suggestions.</label>
+                        <label class="option-label"><input type="radio" name="q6" value="wrath"> Who are THEY to tell ME
+                            what to touch? I’ll paint the whole wall.</label>
+                        <label class="option-label"><input type="radio" name="q6" value="sloth"> I’m looking for a "Dry
+                            Paint" sign so I can lean against it and nap.</label>
+                        <label class="option-label"><input type="radio" name="q6" value="greed"> How much can I sue for
+                            if this paint ruins my designer socks?</label>
+                    </div>
+
+                    <div class="question-item">
+                        <h2>7. You’re playing a board game with family. What’s your strategy?</h2>
+                        <label class="option-label"><input type="radio" name="q7" value="greed" required> I am the
+                            banker and I am definitely embezzling $500s when no one is looking.</label>
+                        <label class="option-label"><input type="radio" name="q7" value="wrath"> If I don’t win, the
+                            board is getting flipped into the next dimension.</label>
+                        <label class="option-label"><input type="radio" name="q7" value="pride"> I don't care about
+                            winning; I just care about looking the smartest while losing.</label>
+                        <label class="option-label"><input type="radio" name="q7" value="gluttony"> I’m only here for
+                            the chips and dip. Is it my turn? I wasn't paying attention.</label>
+                    </div>
+
+                    <div class="question-item">
+                        <h2>8. You found a magic lamp. The Genie offers ONE wish.</h2>
+                        <label class="option-label"><input type="radio" name="q8" value="greed" required> I wish for
+                            more Genies. Obviously.</label>
+                        <label class="option-label"><input type="radio" name="q8" value="sloth"> I wish for a bed that
+                            follows me around and does my taxes.</label>
+                        <label class="option-label"><input type="radio" name="q8" value="lust"> I wish to be the most
+                            desirable person in every room, ever.</label>
+                        <label class="option-label"><input type="radio" name="q8" value="envy"> I wish for my neighbor's
+                            lawn to turn into a swamp. Just because.</label>
+                    </div>
+
+                    <div class="question-item">
+                        <h2>9. Someone gives you a compliment on your outfit.</h2>
+                        <label class="option-label"><input type="radio" name="q9" value="pride" required> "I
+                            know."</label>
+                        <label class="option-label"><input type="radio" name="q9" value="envy"> "Thanks, but did you see
+                            what [Name] is wearing? Yikes."</label>
+                        <label class="option-label"><input type="radio" name="q9" value="gluttony"> "Thanks, it has deep
+                            pockets for hiding extra tacos."</label>
+                        <label class="option-label"><input type="radio" name="q9" value="wrath"> "Are you mocking me? Is
+                            this a prank? Who sent you?"</label>
+                    </div>
+
+                    <div class="question-item">
+                        <h2>10. It’s 3:00 AM. Why are you awake?</h2>
+                        <label class="option-label"><input type="radio" name="q10" value="gluttony" required> I am
+                            currently making a gourmet grilled cheese with four types of contraband meat.</label>
+                        <label class="option-label"><input type="radio" name="q10" value="sloth"> I fell asleep on the
+                            couch at 7 PM and now I’m stuck in an existential void.</label>
+                        <label class="option-label"><input type="radio" name="q10" value="lust"> Falling down a rabbit
+                            hole of people I’ll never meet on the internet.</label>
+                        <label class="option-label"><input type="radio" name="q10" value="greed"> Plotting my 10-step
+                            plan to become a billionaire by next Tuesday.</label>
+                    </div>
+                </div>
+
+                <div class="submit-container">
+                    <button type="submit" class="read-more-btn" style="width: 100%; font-size: 1.5rem;">REVEAL MY
+                        TRUTH</button>
+                </div>
+            </form>
+
+            <div id="result-display">
+                <h2 style="background: none; border: none; box-shadow: none;">Your Primary Sin is...</h2>
+                <div class="sin-title" id="final-sin"></div>
+                <p id="sin-description" style="font-weight: bold; font-size: 1.2rem;"></p>
+                <button class="read-more-btn retake-btn" onclick="location.reload()">RETAKE & LIE AGAIN</button>
+            </div>
+
+            <div class="back-container">
+                <a href="/quizzes.html" class="back-btn">⬅ Discover More Quizzes</a>
+            </div>
+        </div>
+    </main>
+    <div id="footer-placeholder"></div>
+
+    <script src="/assets/js/global.js"></script>
+    <script>
+        document.getElementById('quiz-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            let scores = { pride: 0, greed: 0, lust: 0, envy: 0, gluttony: 0, wrath: 0, sloth: 0 };
+            for (let value of formData.values()) { scores[value]++; }
+
+            const winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+
+            const descriptions = {
+                pride: "You're convinced you're the main character. To be fair, you probably are.",
+                greed: "You want it all. Then you want the 'all' that belongs to everyone else.",
+                lust: "You're a thrill seeker who never knows when to stop. Pure chaos.",
+                envy: "You spend 90% of your time scrolling through people you hate-follow.",
+                gluttony: "Your 'snack' is a full three-course meal. We respect the dedication.",
+                wrath: "You're a ticking time bomb. Please stay 50 feet away from everyone.",
+                sloth: "You've reached a level of laziness that is actually quite impressive."
+            };
+
+            this.style.display = 'none';
+            document.getElementById('funny-message').style.display = 'none';
+
+            document.getElementById('result-display').style.display = 'block';
+            document.getElementById('final-sin').innerText = winner.toUpperCase();
+            document.getElementById('sin-description').innerText = descriptions[winner];
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+
+</html>
