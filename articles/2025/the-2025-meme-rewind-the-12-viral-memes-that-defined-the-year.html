@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IT'S OVER. We survived another year on the world wide web. 2025  was... certainly a year. We laughed, we cried, we got irrationally angry at a low-poly fish from France.">
+    <meta property="og:title" content="The 2025 Meme Rewind: The 12 Viral Memes That Defined the Year">
+    <meta property="og:description" content="IT'S OVER. We survived another year on the world wide web. 2025  was... certainly a year. We laughed, we cried, we got irrationally angry at a low-poly fish from France.">
+    <title>The 2025 Meme Rewind: The 12 Viral Memes That Defined the Year</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <style>
+        main {
+            display: flex;
+            justify-content: center;
+            padding-bottom: 80px;
+        }
+
+        .article-container {
+            background-color: var(--bg-card);
+            border: 4px solid var(--border-color);
+            padding: 3rem;
+            max-width: 800px;
+            width: 100%;
+            margin-top: 20px;
+            box-shadow: 15px 15px 0px var(--accent-purple);
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 3rem;
+            line-height: 1;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            text-shadow: 3px 3px 0px var(--bg-header);
+            word-wrap: break-word;
+        }
+
+        .meta-wrapper {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            font-family: monospace;
+            font-size: 1rem;
+        }
+
+        .meta-tag {
+            background-color: var(--bg-main);
+            border: 2px solid var(--border-color);
+            padding: 5px 15px;
+            font-weight: 900;
+            box-shadow: 3px 3px 0px var(--border-color);
+            transform: rotate(-1deg);
+        }
+
+        .meta-tag:nth-child(even) {
+            transform: rotate(2deg);
+            background-color: var(--accent-blue);
+        }
+
+        .meta-tag:nth-child(3) {
+            background-color: var(--accent-red);
+            color: white;
+        }
+
+        .main-image-container {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .list-image {
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            height: 500px;
+        }
+
+        .main-image-wrapper {
+            width: 100%;
+            background-color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-card);
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: 4px solid var(--border-color);
+            text-transform: uppercase;
+            box-sizing: border-box;
+        }
+
+        .image-caption {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 5px 10px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-top: -10px;
+            position: relative;
+            z-index: 2;
+            max-width: 100%;
+        }
+
+        .image-caption a {
+            color: inherit;
+            text-decoration: none;
+            font-weight: bold;
+            border-bottom: 1px dashed white;
+        }
+
+        .image-caption a:hover {
+            opacity: 0.8;
+            border-bottom: 1px solid white;
+        }
+
+        .article-body p {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 1.15rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .highlight-text {
+            background-color: var(--accent-green);
+            padding: 0 5px;
+            font-weight: bold;
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+        }
+
+        blockquote {
+            background-color: var(--bg-header);
+            color: var(--text-dark);
+            border: 4px solid var(--border-color);
+            margin: 40px 0;
+            padding: 25px;
+            font-size: 1.4rem;
+            font-style: italic;
+            font-weight: 900;
+            line-height: 1.3;
+            box-shadow: 8px 8px 0px var(--border-color);
+            position: relative;
+        }
+
+        blockquote::before {
+            content: "“";
+            font-size: 8rem;
+            position: absolute;
+            top: -60px;
+            left: -20px;
+            color: var(--text-dark);
+            opacity: 0.2;
+            font-family: serif;
+        }
+
+        .meme-entry {
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 4px dashed var(--border-color);
+        }
+
+        .article-body h2 {
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            color: var(--text-dark);
+            background-color: var(--accent-blue);
+            display: inline-block;
+            padding: 10px 15px;
+            border: 3px solid var(--border-color);
+            box-shadow: 5px 5px 0px var(--bg-main);
+            margin-top: 20px;
+            margin-bottom: 25px;
+            transform: rotate(-1deg);
+        }
+
+        .authors-note-box {
+            background-color: var(--accent-green);
+            border: 4px solid var(--border-color);
+            padding: 20px;
+            text-align: center;
+            transform: rotate(-1.5deg);
+            margin-top: 50px;
+            box-shadow: 6px 6px 0px var(--border-color);
+            outline: 2px dashed var(--border-color);
+            outline-offset: -10px;
+        }
+
+        .authors-note-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-thickness: 3px;
+        }
+
+        .back-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .back-btn {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 15px 30px;
+            font-weight: 900;
+            text-decoration: none;
+            text-transform: uppercase;
+            border: 3px solid transparent;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            border: 3px solid var(--border-color);
+            box-shadow: 5px 5px 0px var(--border-color);
+        }
+
+        @media(max-width: 600px) {
+            .article-container {
+                padding: 1.5rem;
+                width: 95%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            blockquote {
+                font-size: 1.1rem;
+                padding: 15px;
+            }
+
+            .article-body h2 {
+                font-size: 1.2rem;
+                padding: 5px 10px;
+            }
+
+            .main-image-wrapper {
+                width: 100% !important;
+                height: auto !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                aspect-ratio: auto !important;
+            }
+
+            .main-image-wrapper img {
+                width: 100% !important;
+                height: auto !important;
+                object-fit: contain !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <main>
+        <article class="article-container">
+            <h1>The 2025 Meme Rewind: The 12 Viral Memes That Defined the Year</h1>
+            <div class="meta-wrapper">
+                <div class="meta-tag" id="meta-date">DATE: 2025-12-18</div>
+                <div class="meta-tag" id="meta-author">AUTHOR: Ruthvik</div>
+                <div class="meta-tag" id="meta-mood">Category: Memes</div>
+            </div>
+            <div class="article-body">
+                <p>IT'S OVER. We survived another year on the world wide web. 2025  was... certainly a year. We laughed, we cried, we got irrationally angry at a low-poly fish from France.</p>
+                
+                
+                <blockquote>
+                    "If you can remember what the '6-7' meme actually means, you weren't really there."
+                    
+                <cite style="display: block; text-align: right; font-size: 1rem; margin-top: 15px; font-style: normal; opacity: 0.8;">
+                    — @realRuthvik from Instagram
+                </cite>
+            
+                </blockquote>
+        
+    
+                <div class="meme-entry" id="meme-1">
+                    <h2>#1 THE Squid Game Salesman</h2>
+                    <div class="main-image-container">
+                        <div class="main-image-wrapper list-image" style="width: 500px; height: 500px; margin: 0; border: 5px solid #000;">
+                            
+                <img src="/assets/media/image/1-the-squid-game-salesman-1.jpg" alt="#1 THE Squid Game Salesman" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            
+                        </div>
+                        <div class="image-caption">Source: <a href="https://in.pinterest.com/pin/162059286585577329/" target="_blank">Pinterest</a></div>
+                    </div>
+                    <p>Gong Yoo’s return as the "Salesman" has reignited the internet’s obsession, proving that his character’s impact hasn’t faded. The Season 2 hype isn’t just about the recruitment games; it’s centered on that iconic, chilling smile. Whether he is approaching players in a crisp suit at a subway station or appearing in the "Standing in the Flowers" edit, he perfectly captures a sense of menacing serenity. Expect his latest appearance to dominate reaction-image culture well into 2026.</p>
+                </div>
+        
+                <div class="meme-entry" id="meme-2">
+                    <h2>#2 The Dancing Rat</h2>
+                    <div class="main-image-container">
+                        <div class="main-image-wrapper list-image" style="width: 500px; height: 500px; margin: 0; border: 5px solid #000;">
+                            
+                <img src="/assets/media/image/2-the-dancing-rat-2.gif" alt="#2 The Dancing Rat" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            
+                        </div>
+                        <div class="image-caption">Source: <a href="https://giphy.com/gifs/rat-dance-kamvret-komikkamvret-NsIlMDHvA0dbgzhZr7" target="_blank">Giphy</a></div>
+                    </div>
+                    <p>Amidst a chaotic year, the low-poly "Dancing Rat" became an unexpected symbol of digital escapism. Grooving to a rhythmic beat, this simple animation offered a sense of carefree stability for those looking to celebrate the weekend or find a moment of levity during the workday. As a definitive cultural touchstone of 2025, the rodent’s blissful ignorance of global complexities resonated with millions.</p>
+                </div>
+        
+                <div class="meme-entry" id="meme-3">
+                    <h2>#3 100 Men Vs 1 Gorilla</h2>
+                    <div class="main-image-container">
+                        <div class="main-image-wrapper list-image" style="width: 550px; height: 500px; margin: 0; border: 5px solid #000;">
+                            
+                <img src="/assets/media/image/3-100-men-vs-1-gorilla-3.jpg" alt="#3 100 Men Vs 1 Gorilla" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            
+                        </div>
+                        <div class="image-caption">Source: <a href="https://www.volcanoesparkrwanda.org/information/silverbacks-need-know/" target="_blank">Volcano Espark Rwanda</a></div>
+                    </div>
+                    <p>The hypothetical debate regarding human versus gorilla physical prowess became one of the most divisive topics of the year, dominating digital forums and social discussions alike. While individual overconfidence often fueled the argument, biological data regarding the sheer PSI and muscle density of a silverback remains indisputable. The phenomenon highlighted a fascinating contrast between human hubris and the raw, unyielding power of nature, ultimately concluding that logic—and the gorilla—prevails.</p>
+                </div>
+        
+                <div class="meme-entry" id="meme-4">
+                    <h2>#4 The Minecraft Movie: Chicken Jockey!!</h2>
+                    <div class="main-image-container">
+                        <div class="main-image-wrapper list-image" style="width: 500px; height: 500px; margin: 0; border: 5px solid #000;">
+                            
+                <img src="/assets/media/image/4-the-minecraft-movie-chicken-jockey-4.gif" alt="#4 The Minecraft Movie: Chicken Jockey!!" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            
+                        </div>
+                        <div class="image-caption">Source: <a href="https://tenor.com/view/chicken-jockey-gif-4068318559502518830" target="_blank">Tenor</a></div>
+                    </div>
+                    <p>The release of A Minecraft Movie sparked an immediate and polarizing wave of digital discourse. Central to the conversation was Jack Black’s high-energy portrayal of Steve, specifically the viral "Chicken Jockey" sequence. While the film’s bold, live-action aesthetic initially met with skepticism, it quickly transitioned into a cultural phenomenon. Whether embraced for its humor or its eccentricity, the production has cemented itself as a definitive—and highly quoted—moment in the history of video game adaptations.</p>
+                </div>
+        
+                <div class="meme-entry" id="meme-5">
+                    <h2>#5 The Brainrot: Tung Tung Tung Sahur</h2>
+                    <div class="main-image-container">
+                        <div class="main-image-wrapper list-image" style="width: 500px; height: 500px; margin: 0; border: 5px solid #000;">
+                            
+                <img src="/assets/media/image/5-the-brainrot-tung-tung-tung-sahur-5.jpg" alt="#5 The Brainrot: Tung Tung Tung Sahur" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            
+                        </div>
+                        <div class="image-caption">Source: <a href="none" target="_blank">AI Generated</a></div>
+                    </div>
+                    <p>The "Tung Tung Sahur" phenomenon represents a fascinating intersection of traditional Indonesian culture and modern digital surrealism. Centered around the Kentongan—a traditional slit drum used to signal the pre-dawn Ramadan meal—this trend evolved into an aggressive, high-energy "alarm clock" for the internet. This wave of regional content was mirrored by the "Italian brainrot" trend, where repetitive, nonsensical linguistic patterns like "Lira Lira," "Bombardilo," and "Corcodio" became rhythmic staples of social media feeds. Together, these trends showcase how hyper-localized cultural markers are being repurposed into global symbols of absurdism.</p>
+                </div>
+        
+                <div class="meme-entry" id="meme-6">
+                    <h2>#6 SIX SEVEN!! - 67</h2>
+                    <div class="main-image-container">
+                        <div class="main-image-wrapper list-image" style="width: 500px; height: 500px; margin: 0; border: 5px solid #000;">
+                            
+                <img src="/assets/media/image/6-six-seven-67-6.gif" alt="#6 SIX SEVEN!! - 67" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            
+                        </div>
+                        <div class="image-caption">Source: <a href="https://tenor.com/view/nub-nub-cat-silly-cat-silly-cute-gif-18315508831080649878" target="_blank">Tenor</a></div>
+                    </div>
+                    <p>Here are three professional ways to rewrite the content about the "67" meme for your news website:
+
+Option 1: Editorial & Cultural (The Power of Ambiguity)
+The "67" phenomenon emerged as one of the most enigmatic viral trends of the year, captivating the digital landscape through its sheer ambiguity. Whether interpreted as a physical measurement, a statistic, or a rhythmic exclamation, the phrase gained massive traction following its appearance in Skrilla’s discography and its subsequent popularization via the "67 Kid" viral basketball clip. Its rise to prominence highlights a unique facet of modern internet culture: the ability of a singular, abstract reference to foster a sense of community while simultaneously baffling those outside of the digital loop.</p>
+                </div>
+        
+                <div class="meme-entry" id="meme-7">
+                    <h2>#7 Indonesia Boat Racing: AURA FARMING KID!!</h2>
+                    <div class="main-image-container">
+                        <div class="main-image-wrapper list-image" style="width: 300px; height: 300px; margin: 0; border: 5px solid #000;">
+                            
+                <img src="/assets/media/image/7-indonesia-boat-racing-aura-farming-kid-7.gif" alt="#7 Indonesia Boat Racing: AURA FARMING KID!!" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            
+                        </div>
+                        <div class="image-caption">Source: <a href="https://tenor.com/view/boat-kid-aura-farming-pacu-jalur-indonesia-boat-race-aura-farming-kid-gif-13961136228978115920" target="_blank">Tenor</a></div>
+                    </div>
+                    <p>Few individuals captured the internet's attention this year quite like Rayyan Arkan Dikha. Standing at the forefront of a traditional Pacu Jalur racing boat, his rhythmic performance became a definitive viral moment, characterized by an unmatched sense of composure. By balancing ancient tradition with a modern sense of "aura," Rayyan has become a global icon of confidence, proving that sometimes the most impactful presence is the one that remains calm amidst the chaos. +1000 Aura!!</p>
+                </div>
+        
+                <div class="meme-entry" id="meme-8">
+                    <h2>#8 Japanese Mochi Makers: Yosho Hai Yoi Yoi!!</h2>
+                    <div class="main-image-container">
+                        <div class="main-image-wrapper list-image" style="width: 350px; height: 500px; margin: 0; border: 5px solid #000;">
+                            
+                <img src="/assets/media/image/8-japanese-mochi-makers-yosho-hai-yoi-yoi-8.gif" alt="#8 Japanese Mochi Makers: Yosho Hai Yoi Yoi!!" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            
+                        </div>
+                        <div class="image-caption">Source: <a href="https://tenor.com/view/yosho-yoshi-hai-yoi-yoi-mochi-mochi-making-gif-16946453427369840634" target="_blank">Tenor</a></div>
+                    </div>
+                    <p>The rhythmic chants of "YOSHO! HAI! YOI!" have become a global auditory staple as the legendary mochi pounders of Nara reached a new peak of viral prominence in 2025. Characterized by extreme speed and high-stakes precision, these artisans demonstrate a level of coordination that borders on the superhuman. This performance, while inherently dangerous to the untrained, serves as a captivating masterclass in traditional craftsmanship and synchronized effort, resonating with audiences as a symbol of peak focus.</p>
+                </div>
+        
+                <div class="meme-entry" id="meme-9">
+                    <h2>#9 My Little Soda Pop: Kpop Demon Hunters</h2>
+                    <div class="main-image-container">
+                        <div class="main-image-wrapper list-image" style="width: 650px; height: 300px; margin: 0; border: 5px solid #000;">
+                            
+                <img src="/assets/media/image/9-my-little-soda-pop-kpop-demon-hunters-9.gif" alt="#9 My Little Soda Pop: Kpop Demon Hunters" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            
+                        </div>
+                        <div class="image-caption">Source: <a href="https://tenor.com/view/kpop-demon-hunters-2025-film-movie-animated-gif-2170181526466355571" target="_blank">Tenor</a></div>
+                    </div>
+                    <p>In a move that has captivated both the music and film industries, Sony Animation’s recent release has achieved significant commercial and critical traction. The production utilizes a stylized animation technique that mirrors the aesthetic success of previous hybrid features, providing a vibrant backdrop for its unique storyline. The film’s soundtrack, specifically the track "Soda Pop," has become a dominant fixture in short-form video trends, demonstrating the powerful synergy between animation and modern digital marketing.</p>
+                </div>
+        
+                <div class="meme-entry" id="meme-10">
+                    <h2>#10 Shake That Booty: The Blue Shirt Salsa Guy's Dance!!</h2>
+                    <div class="main-image-container">
+                        <div class="main-image-wrapper list-image" style="width: 500px; height: 500px; margin: 0; border: 5px solid #000;">
+                            
+                <img src="/assets/media/image/10-shake-that-booty-the-blue-shirt-salsa-guy-s-dance-10.gif" alt="#10 Shake That Booty: The Blue Shirt Salsa Guy's Dance!!" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            
+                        </div>
+                        <div class="image-caption">Source: <a href="https://tenor.com/view/ggroovymp6-gif-10909970801652168564" target="_blank">Tenor</a></div>
+                    </div>
+                    <p>Professional dancer Ruslan Aidaev has become the definitive face of celebration in 2025. Known widely as the "Salsa Guy," Aidaev’s rhythmic performance—marked by his signature blue shirt and effortless composure—has evolved into a universal digital shorthand for success. The viral clip resonates because it captures a rare sense of unbothered confidence, providing the internet with a sophisticated way to signal a "win" in any context, from personal achievements to professional milestones.</p>
+                </div>
+        
+                <div class="meme-entry" id="meme-11">
+                    <h2>#11 "Nothing beats a Jet2 holiday!"</h2>
+                    <div class="main-image-container">
+                        <div class="main-image-wrapper list-image" style="width: 720px; height: 400px; margin: 0; border: 5px solid #000;">
+                            
+                <img src="/assets/media/image/11-nothing-beats-a-jet2-holiday-11.jpg" alt="#11 "Nothing beats a Jet2 holiday!"" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            
+                        </div>
+                        <div class="image-caption">Source: <a href="https://www.gettyimages.in/detail/news-photo/boeing-737-8k2-from-jet2-is-landing-at-barcelona-airport-in-news-photo/1819254147" target="_blank">Tenor</a></div>
+                    </div>
+                    <p>In 2025, the "Nothing beats a Jet2 holiday" meme became a primary example of "bait-and-switch" humor within digital discourse. This trend involves the unexpected use of a cheerful, aspirational soundtrack to underscore videos of environmental disasters or personal inconveniences. Analysts note that the meme’s success lies in its stark juxtaposition—the optimism of the music versus the reality of the visual—solidifying Jess Glynne’s 2015 hit as an inescapable fixture of contemporary internet satire.</p>
+                </div>
+        
+                <div class="meme-entry" id="meme-12">
+                    <h2>#12 The Niche & Tuff Baby</h2>
+                    <div class="main-image-container">
+                        <div class="main-image-wrapper list-image" style="width: 500px; height: 500px; margin: 0; border: 5px solid #000;">
+                            
+                <img src="/assets/media/image/12-the-niche-tuff-baby-12.gif" alt="#12 The Niche & Tuff Baby" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            
+                        </div>
+                        <div class="image-caption">Source: <a href="none" target="_blank">AI Generated</a></div>
+                    </div>
+                    <p>Characterized by its distinct rotoscoped visual style, the "Shy Laugh Baby" has emerged as a significant fixture in the landscape of 2025 digital media. The meme utilizes a specific set of mannerisms borrowed from international social media trends, re-contextualizing them through an abstract, animated lens. Analysts note that its success is driven by its unique ability to capture complex emotions—such as quiet observation and subtle mockery—making it a versatile tool for social commentary within online communities.</p>
+                </div>
+        
+                
+                <div class="authors-note-box">
+                    <h3>AUTHOR'S NOTE</h3>
+                    <p>2025 was a fever dream. Log off, touch grass, and see you in 2026.</p>
+                </div>
+        
+
+                <div class="back-container"><a href="/index.html" class="back-btn">⬅ Back Home</a></div>
+            </div>
+        </article>
+    </main>
+    <div id="footer-placeholder"></div>
+    <script src="/assets/js/global.js"></script>
+    <script src="/assets/js/article.js"></script>
+</body>
+</html>
+    

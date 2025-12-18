@@ -9,7 +9,7 @@ import re
 _bot_auth_ = "" 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_FILE = os.path.join(BASE_DIR, 'data', 'articles.json')
-IMAGE_DIR = os.path.join(BASE_DIR, 'media', 'image')
+IMAGE_DIR = os.path.join(BASE_DIR, 'assets', 'media', 'image')
 
 os.makedirs(IMAGE_DIR, exist_ok=True)
 os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
@@ -65,7 +65,7 @@ def generate_html_file(article_data):
     <meta property="og:title" content="{article_data['title']}">
     <meta property="og:description" content="{article_data['excerpt']}">
     <title>{article_data['title']}</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
     
     <style>
         main {{
@@ -357,7 +357,7 @@ def generate_html_file(article_data):
             """
         else:
             media_html = f"""
-                <img src="/media/image/{item['media_content']}" alt="{item['heading']}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                <img src="/assets/media/image/{item['media_content']}" alt="{item['heading']}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
             """
 
         html += f"""
@@ -381,8 +381,8 @@ def generate_html_file(article_data):
         </article>
     </main>
     <div id="footer-placeholder"></div>
-    <script src="/js/global.js"></script>
-    <script src="/js/article.js"></script>
+    <script src="/assets/js/global.js"></script>
+    <script src="/assets/js/article.js"></script>
 </body>
 </html>
     """
@@ -403,48 +403,48 @@ async def post(ctx):
 
     try:
         await ctx.send("Initiating article creation process. Please enter the article **Headline**.")
-        msg = await bot.wait_for('message', check=check, timeout=120.0)
+        msg = await bot.wait_for('message', check=check, timeout=1200.0)
         title = msg.content
 
         await ctx.send("Please enter the **Excerpt** (introduction text).")
-        msg = await bot.wait_for('message', check=check, timeout=120.0)
+        msg = await bot.wait_for('message', check=check, timeout=1200.0)
         excerpt = msg.content
 
         await ctx.send("Please enter the **Author Name**.")
-        msg = await bot.wait_for('message', check=check, timeout=120.0)
+        msg = await bot.wait_for('message', check=check, timeout=1200.0)
         author = msg.content
 
         await ctx.send("Please enter the **Category**.")
-        msg = await bot.wait_for('message', check=check, timeout=120.0)
+        msg = await bot.wait_for('message', check=check, timeout=1200.0)
         category = msg.content
 
         quote_text = ""
         quote_author = ""
         await ctx.send("Do you wish to include a **Quote Box**? (Yes/No)")
-        msg = await bot.wait_for('message', check=check, timeout=60.0)
+        msg = await bot.wait_for('message', check=check, timeout=600.0)
         if msg.content.lower() in ['yes', 'y']:
             await ctx.send("Please enter the content for the quote.")
-            msg = await bot.wait_for('message', check=check, timeout=120.0)
+            msg = await bot.wait_for('message', check=check, timeout=1200.0)
             quote_text = msg.content
             
             await ctx.send("Who is this quote by? (e.g., @randomuser from Twitter)")
-            msg = await bot.wait_for('message', check=check, timeout=120.0)
+            msg = await bot.wait_for('message', check=check, timeout=1200.0)
             quote_author = msg.content
 
         authors_note_text = ""
         await ctx.send("Do you wish to include an **Author's Note** at the end? (Yes/No)")
-        msg = await bot.wait_for('message', check=check, timeout=60.0)
+        msg = await bot.wait_for('message', check=check, timeout=600.0)
         if msg.content.lower() in ['yes', 'y']:
             await ctx.send("Please enter the content for the author's note.")
-            msg = await bot.wait_for('message', check=check, timeout=120.0)
+            msg = await bot.wait_for('message', check=check, timeout=1200.0)
             authors_note_text = msg.content
 
         await ctx.send("Is this a **Featured Article**? (Yes/No)\n*Note: Answering 'Yes' will remove 'Featured' status from any existing article.*")
-        msg = await bot.wait_for('message', check=check, timeout=60.0)
+        msg = await bot.wait_for('message', check=check, timeout=600.0)
         is_featured = msg.content.lower() in ['yes', 'y']
 
         await ctx.send("Please upload the **Featured Image** for the article thumbnail (to be stored in JSON).")
-        msg = await bot.wait_for('message', check=check, timeout=120.0)
+        msg = await bot.wait_for('message', check=check, timeout=1200.0)
         
         if not msg.attachments:
             await ctx.send("No attachment detected. Process aborted.")
@@ -459,7 +459,7 @@ async def post(ctx):
         await ctx.send("Featured image saved successfully.")
 
         await ctx.send("Please enter the number of list items (media items) to include.")
-        msg = await bot.wait_for('message', check=check, timeout=120.0)
+        msg = await bot.wait_for('message', check=check, timeout=1200.0)
         try:
             num_images = int(msg.content)
         except ValueError:
@@ -470,30 +470,30 @@ async def post(ctx):
         
         for i in range(1, num_images + 1):
             await ctx.send(f"--- **Item {i}** ---\nPlease enter the **Heading** for this item.")
-            msg = await bot.wait_for('message', check=check, timeout=120.0)
+            msg = await bot.wait_for('message', check=check, timeout=1200.0)
             heading = msg.content
 
             await ctx.send(f"Please enter the **Description Text** for: {heading}")
-            msg = await bot.wait_for('message', check=check, timeout=300.0)
+            msg = await bot.wait_for('message', check=check, timeout=3000.0)
             text = msg.content
 
             await ctx.send("Please enter the **Image Source Name** (e.g., 'NY Times' or 'John Doe').")
-            msg = await bot.wait_for('message', check=check, timeout=60.0)
+            msg = await bot.wait_for('message', check=check, timeout=600.0)
             source = msg.content
             
             await ctx.send("Please enter the **Link (URL)** for the source.")
-            msg = await bot.wait_for('message', check=check, timeout=120.0)
+            msg = await bot.wait_for('message', check=check, timeout=1200.0)
             source_link = msg.content
 
             await ctx.send(f"Is Item {i} an **Image** or a **YouTube** video? (Type 'image' or 'youtube')")
-            msg = await bot.wait_for('message', check=check, timeout=60.0)
+            msg = await bot.wait_for('message', check=check, timeout=600.0)
             media_choice = msg.content.lower()
             
             media_type = "image"
             media_content = ""
 
             await ctx.send(f"Please enter the **Width** for item {i} in pixels (e.g., 500).")
-            msg = await bot.wait_for('message', check=check, timeout=60.0)
+            msg = await bot.wait_for('message', check=check, timeout=600.0)
             try:
                 img_width = int(msg.content)
             except ValueError:
@@ -501,7 +501,7 @@ async def post(ctx):
                 img_width = 500
 
             await ctx.send(f"Please enter the **Height** for item {i} in pixels (e.g., 500).")
-            msg = await bot.wait_for('message', check=check, timeout=60.0)
+            msg = await bot.wait_for('message', check=check, timeout=600.0)
             try:
                 img_height = int(msg.content)
             except ValueError:
@@ -511,7 +511,7 @@ async def post(ctx):
             if "youtube" in media_choice:
                 media_type = "youtube"
                 await ctx.send(f"Please paste the **YouTube Link** for item {i}.")
-                msg = await bot.wait_for('message', check=check, timeout=120.0)
+                msg = await bot.wait_for('message', check=check, timeout=1200.0)
                 youtube_url = msg.content
                 
                 vid_id = extract_youtube_id(youtube_url)
@@ -525,7 +525,7 @@ async def post(ctx):
             else:
                 media_type = "image"
                 await ctx.send(f"Please upload the **Image** for item {i}.")
-                msg = await bot.wait_for('message', check=check, timeout=120.0)
+                msg = await bot.wait_for('message', check=check, timeout=1200.0)
 
                 if not msg.attachments:
                     await ctx.send("No attachment detected. Skipping this item.")
