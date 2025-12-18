@@ -1,21 +1,33 @@
 let allArticles = []; 
 
-document.addEventListener("DOMContentLoaded", function() {
-    fetch('data/articles.json')
-        .then(response => response.json())
-        .then(data => {
-            allArticles = data;
-            renderHomepage(allArticles);
-        })
-        .catch(error => console.error('Error loading news:', error));
+// Optimization: Debounce function to prevent UI lag during typing
+function debounce(func, timeout = 300) {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
+}
 
-    // --- SMART LIVE FILTER WITH FALLBACK ---
-    document.addEventListener('input', function(e) {
-        if (e.target && e.target.id === 'search-input') {
+document.addEventListener("DOMContentLoaded", async function() {
+    // 1. Fetch data using modern async/await
+    try {
+        const response = await fetch('data/articles.json');
+        if (!response.ok) throw new Error('Network response was not ok');
+        allArticles = await response.json();
+        renderHomepage(allArticles);
+    } catch (error) {
+        console.error('Error loading news:', error);
+    }
+
+    // 2. Smart Live Filter with 300ms Debounce
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', debounce((e) => {
             const query = e.target.value.trim().toLowerCase();
             smartFilter(query);
-        }
-    });
+        }, 300));
+    }
 
     document.addEventListener('submit', function(e) {
         if (e.target && e.target.id === 'search-form') e.preventDefault();
@@ -23,7 +35,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function smartFilter(query) {
-    // If search box is empty, show everything
     if (!query) {
         renderGrid(allArticles);
         return;
@@ -37,7 +48,6 @@ function smartFilter(query) {
         const author = article.author.toLowerCase();
         const date = article.date.toLowerCase();
 
-        // Scoring weights
         if (title.includes(query)) score += 30;
         if (excerpt.includes(query)) score += 20;
         if (category.includes(query)) score += 15;
@@ -47,23 +57,19 @@ function smartFilter(query) {
         return { ...article, relevanceScore: score };
     });
 
-    // Filter results that have a score > 0
     const filtered = scoredArticles
         .filter(article => article.relevanceScore > 0)
         .sort((a, b) => b.relevanceScore - a.relevanceScore);
 
-    // CHANGE: If no results found, ignore the filter and show all articles
-    if (filtered.length === 0) {
-        renderGrid(allArticles);
-    } else {
-        renderGrid(filtered);
-    }
+    // If no results found, show all articles
+    renderGrid(filtered.length === 0 ? allArticles : filtered);
 }
 
+// PRESERVING YOUR EXACT CSS AND HTML STRUCTURE
 function renderGrid(articles) {
     const feedContainer = document.getElementById('feed-container');
-    
-    // No "No results found" message anymore; we just render the list provided
+    if (!feedContainer) return;
+
     feedContainer.innerHTML = articles.map(article => `
         <article class="card">
             <div class="card-image-placeholder" style="aspect-ratio: 16/9; overflow: hidden; border-bottom: 3px solid black;">
@@ -87,8 +93,11 @@ function renderGrid(articles) {
     `).join('');
 }
 
+// PRESERVING YOUR EXACT CSS AND HTML STRUCTURE
 function renderHomepage(articles) {
     const heroContainer = document.getElementById('hero-container');
+    if (!heroContainer) return;
+    
     const featured = articles.find(article => article.isFeatured === true);
     
     if (featured) {

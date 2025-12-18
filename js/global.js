@@ -1,13 +1,15 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
     // 1. Determine which header to load based on the current page
     const isHomePage = window.location.pathname === '/' || window.location.pathname.endsWith('index.html');
     const headerPath = isHomePage ? '/components/header.html' : '/components/header-articles.html';
 
-    // 2. Load the specific components
-    loadComponent('header-placeholder', headerPath);
-    loadComponent('footer-placeholder', '/components/footer.html');
+    // 2. Load components concurrently for better performance
+    await Promise.all([
+        loadComponent('header-placeholder', headerPath),
+        loadComponent('footer-placeholder', '/components/footer.html')
+    ]);
 
-    // --- Mobile Menu Logic ---
+    // 3. Mobile Menu Logic (unchanged to preserve functionality)
     document.addEventListener('click', function(e) {
         const btn = e.target.closest('#mobile-menu-btn');
         if (btn) {
@@ -17,22 +19,21 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
     });
-
-    // Note: The Search Logic remains removed from global.js 
-    // because it is now handled specifically in home.js
 });
 
-function loadComponent(elementId, filePath) {
-    fetch(filePath)
-        .then(response => {
-            if (!response.ok) throw new Error("Component not found: " + filePath);
-            return response.text();
-        })
-        .then(data => {
-            const element = document.getElementById(elementId);
-            if (element) {
-                element.innerHTML = data;
-            }
-        })
-        .catch(error => console.error('Error loading component:', error));
+/**
+ * Optimized async component loader
+ */
+async function loadComponent(elementId, filePath) {
+    try {
+        const response = await fetch(filePath);
+        if (!response.ok) throw new Error("Component not found: " + filePath);
+        const data = await response.text();
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.innerHTML = data;
+        }
+    } catch (error) {
+        console.error('Error loading component:', error);
+    }
 }

@@ -61,6 +61,9 @@ def generate_html_file(article_data):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{article_data['excerpt']}">
+    <meta property="og:title" content="{article_data['title']}">
+    <meta property="og:description" content="{article_data['excerpt']}">
     <title>{article_data['title']}</title>
     <link rel="stylesheet" href="/css/style.css">
     
@@ -324,9 +327,9 @@ def generate_html_file(article_data):
         <article class="article-container">
             <h1>{article_data['title']}</h1>
             <div class="meta-wrapper">
-                <div class="meta-tag" id="meta-date">DATE: Loading...</div>
-                <div class="meta-tag" id="meta-author">AUTHOR: Loading...</div>
-                <div class="meta-tag" id="meta-mood">Category: Loading...</div>
+                <div class="meta-tag" id="meta-date">DATE: {article_data['date']}</div>
+                <div class="meta-tag" id="meta-author">AUTHOR: {article_data['author']}</div>
+                <div class="meta-tag" id="meta-mood">Category: {article_data['category']}</div>
             </div>
             <div class="article-body">
                 <p>{article_data['excerpt']}</p>
