@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Tsip 💅</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        main {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px 80px 20px;
+        }
+
+        .contact-container {
+            background-color: var(--bg-card);
+            border: 4px solid var(--border-color);
+            padding: 3rem;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 15px 15px 0px var(--accent-blue);
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            line-height: 1;
+            margin-bottom: 30px;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            text-shadow: 4px 4px 0px var(--bg-header);
+        }
+
+        section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            margin-top: 2rem;
+            border-bottom: 4px solid var(--accent-purple);
+            display: inline-block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 900;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea {
+            padding: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: bold;
+            border: 3px solid var(--border-color);
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+
+        /* input:focus, textarea:focus, select:focus {
+            border-color: var(--accent-purple);
+            box-shadow: 4px 4px 0px var(--accent-purple);
+        } */
+
+        textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .checkbox-group {
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .checkbox-group input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .note {
+            font-size: 0.85rem;
+            font-style: italic;
+            margin-top: 5px;
+            color: #555;
+        }
+
+        .submit-btn {
+            background-color: #FAFF00;
+            color: var(--text-dark);
+            padding: 15px 40px;
+            font-weight: 900;
+            text-transform: uppercase;
+            border: 4px solid var(--border-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 6px 6px 0px var(--border-color);
+            transition: 0.1s;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 8px 8px 0px var(--border-color);
+            background-color: var(--accent-green);
+        }
+
+        .back-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .back-btn {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 15px 30px;
+            font-weight: 900;
+            text-decoration: none;
+            text-transform: uppercase;
+            border: 3px solid transparent;
+            font-size: 1.1rem;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background-color: var(--bg-card);
+            color: var(--text-dark);
+            border: 3px solid var(--border-color);
+            box-shadow: 5px 5px 0px var(--border-color);
+        }
+
+        @media(max-width: 600px) {
+            .contact-container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main>
+        <div class="contact-container">
+            <h1>Contact</h1>
+
+            <form action="#" method="POST">
+                <div class="form-group">
+                    <label for="reason">Hello! Why are you contacting us today?</label>
+                    <select id="reason" name="reason">
+                        <option value="takedown">DMCA or Content Takedown Request.</option>
+                        <option value="tip">I want to pitch an article.</option>
+                        <option value="bug">I want to report a bug.</option>
+                        <option value="business">Business Inquiry.</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <section>
+                    <h2>Tell us more</h2>
+                    <div class="form-group">
+                        <label for="summary">Summarize your request in one sentence*</label>
+                        <input type="text" id="summary" name="summary" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="details">Explain in detail*</label>
+                        <textarea id="details" name="details" required
+                            placeholder="If this is a DMCA/Takedown request, please include URLs and proof of ownership."></textarea>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="anonymous" name="anonymous">
+                        <label for="anonymous">Keep me anonymous</label>
+                    </div>
+                    <!-- <p class="note">Note: While Tsip can grant you anonymity, it may be necessary to contact you to
+                        verify your claim.</p> -->
+                </section>
+
+                <section>
+                    <h2>Tell us about you</h2>
+                    <div class="form-group">
+                        <label for="name">First and last name*</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email address*</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </section>
+
+                <!-- <p class="note">By submitting this form, you agree to our <a href="#">community guidelines</a>.</p> -->
+
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+
+            <div class="back-container">
+                <a href="index.html" class="back-btn">⬅ Back Home</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const data = {
+                reason: formData.get('reason'),
+                summary: formData.get('summary'),
+                details: formData.get('details'),
+                anonymous: formData.get('anonymous') === 'on',
+                name: formData.get('name'),
+                email: formData.get('email'),
+                submitted_at: new Date().toLocaleString()
+            };
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/submit-contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('You have successfully submitted the contact form. Thank you!');
+                    e.target.reset();
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Connection Error:', error);
+                alert('Could not connect to the backend. Is Contact-Page.py running?');
+            }
+        });
+    </script>
+    <script src="assets/js/global.js"></script>
+</body>
+
+</html>
