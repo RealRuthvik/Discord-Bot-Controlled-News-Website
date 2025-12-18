@@ -81,7 +81,7 @@ def generate_html_file(article_data):
             max-width: 800px;
             width: 100%;
             margin-top: 20px;
-            box-shadow: 15px 15px 0px var(--accent-purple);
+            box-shadow: 15px 15px 0px var(--accent-green);
             position: relative;
             box-sizing: border-box;
         }}
@@ -106,7 +106,7 @@ def generate_html_file(article_data):
         }}
 
         .meta-tag {{
-            background-color: var(--bg-main);
+            background-color: var(--accent-yellow);
             border: 2px solid var(--border-color);
             padding: 5px 15px;
             font-weight: 900;
@@ -195,7 +195,7 @@ def generate_html_file(article_data):
         }}
 
         blockquote {{
-            background-color: var(--bg-header);
+            background-color: var(--accent-orange);
             color: var(--text-dark);
             border: 4px solid var(--border-color);
             margin: 40px 0;

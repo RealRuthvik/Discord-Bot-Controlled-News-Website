@@ -5,7 +5,7 @@ main {
 }
 
 .hero-headline {
-    background-color: lawngreen; 
+    background-color: wheat; 
     border: 3px solid var(--border-color);
     border-radius: 12px;
     padding: 30px;
@@ -21,7 +21,7 @@ main {
 
 .hero-headline:hover {
     transform: rotate(0deg) scale(1.02);
-    background-color: var(--accent-blue);
+    background-color: rgb(255, 240, 214);
 }
 
 .feed-grid {

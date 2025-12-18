@@ -1,13 +1,14 @@
 :root {
-    --bg-main: #FFC400;
+    --bg-main: #dedad0;
     --bg-card: #FFF8F0;
-    --bg-header: #FF90E8;
+    --bg-header: #bbb8b1;
     --accent-blue: #64B5F6;
     --accent-green: #81C784;
     --accent-red: #FF6B6B;
     --accent-purple: #BA68C8;
     --accent-orange: #FFB74D;
     --accent-teal: #4DB6AC;
+    --accent-yellow: #ecff1f;
     --text-dark: #2D2D2D;
     --border-color: #2D2D2D;
 }
@@ -178,7 +179,7 @@ footer {
 }
 
 #search-btn {
-    background-color: var(--accent-green);
+    background-color: var(--accent-red);
     border: 3px solid var(--border-color);
     border-radius: 8px;
     cursor: pointer;
