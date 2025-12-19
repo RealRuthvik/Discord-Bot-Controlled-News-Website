@@ -19,6 +19,7 @@
             object-fit: cover;
             border: 4px solid black;
         }
+
         .quiz-card-icon {
             font-size: 4rem;
             color: white;
@@ -43,7 +44,7 @@
             {
                 id: 1,
                 title: "Which Seven Deadly Sins Character Are You? (2026 Edition)",
-                excerpt: "Only 1% survive this truth. Our 2026 test swaps old sins for digital habits. Discover if you're a \"Professional Lurker\" or a \"Digital Hoarder.\" It’s unhinged and more accurate than therapy. Reveal your truth now.",
+                excerpt: "Only 1% survive this truth. Our 2026 test swaps old sins for digital habits. Discover if you're a \"Professional Lurker\" or a \"Digital Hoarder.\"",
                 category: "Personality",
                 date: "2026-01-01",
                 link: "/quizzes/which-one-of-the-seven-deadly-sins-are-you-2026-edition.html",
@@ -63,7 +64,7 @@
             {
                 id: 3,
                 title: "The 2026 Rice Purity Test",
-                excerpt: "The 2026 Edition of the famous Rice Purity Test. Tick the boxes for everything you've done, and we'll calculate your innocence score. Warning: This gets personal!",
+                excerpt: "The 2026 Edition of the famous Rice Purity Test. Tick the boxes for everything you've done, and we'll calculate your innocence score.",
                 category: "Personality",
                 date: "2026-01-03",
                 link: "/quizzes/the-2026-rice-purity-test.html",
@@ -74,42 +75,76 @@
 
         function renderQuizzes(list) {
             const feedContainer = document.getElementById('quiz-feed-container');
+            if (!feedContainer) return;
 
             feedContainer.innerHTML = list.map(q => {
                 const visualGrid = q.image
                     ? `<img src="${q.image}" class="quiz-card-image" alt="${q.title}">`
-                    : `<div class="card-image-placeholder" style="background-color: ${q.color}; height: 200px; display: flex; align-items: center; justify-content: center;">
-                        <span class="quiz-card-icon">?</span>
-                       </div>`;
+                    : `<div class="card-image-placeholder" style="background-color: ${q.color}; height: 250px; display: flex; align-items: center; justify-content: center;">
+                <span class="quiz-card-icon">?</span>
+               </div>`;
 
                 return `
-                <article class="card">
-                    ${visualGrid}
-                    <div style="padding: 20px;">
-                        <div style="margin-bottom: 12px;">
-                            <span class="meta-tag" style="font-size: 0.8rem; background-color: #ff6b6b; padding: 2px 8px; border: 2px solid black; font-weight: bold;">${q.category}</span>
-                            
-                        </div>
-                        <h3 style="margin-bottom: 10px; font-size: 1.2rem;">${q.title}</h3>
-                        <p style="font-size: 0.9rem; color: #444; margin-bottom: 20px;">${q.excerpt}</p>
-                        <a href="${q.link}"><button class="read-more-btn" style="width: 100%;">START QUIZ</button></a>
-                    </div>
-                </article>
-            `;
+        <article class="card">
+            ${visualGrid}
+            <div style="padding: 20px;">
+                <div style="margin-bottom: 12px;">
+                    <span class="meta-tag" style="font-size: 0.8rem; background-color: #ff6b6b; padding: 2px 8px; border: 2px solid black; font-weight: bold;">${q.category}</span>
+                </div>
+                <h3 style="margin-bottom: 10px; font-size: 1.2rem;">${q.title}</h3>
+                <p style="font-size: 0.9rem; color: #444; margin-bottom: 20px;">${q.excerpt}</p>
+                <a href="${q.link}"><button class="read-more-btn" style="width: 100%;">START QUIZ</button></a>
+            </div>
+        </article>
+    `;
             }).join('');
         }
 
+        function smartQuizFilter(query) {
+            if (!query) {
+                // Fallback to ID sorting if search is cleared
+                allQuizzes.sort((a, b) => b.id - a.id);
+                renderQuizzes(allQuizzes);
+                return;
+            }
+
+            const scored = allQuizzes.map(q => {
+                let score = 0;
+                const title = q.title.toLowerCase();
+                const excerpt = q.excerpt.toLowerCase();
+                const category = q.category.toLowerCase();
+
+                if (title.includes(query)) score += 30;
+                if (excerpt.includes(query)) score += 20;
+                if (category.includes(query)) score += 15;
+
+                return { ...q, relevanceScore: score };
+            });
+
+            // Sort by Score, then by ID (Descending)
+            scored.sort((a, b) => {
+                if (b.relevanceScore !== a.relevanceScore) {
+                    return b.relevanceScore - a.relevanceScore;
+                }
+                return b.id - a.id;
+            });
+
+            renderQuizzes(scored);
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
+            // Initial sort by highest ID
+            allQuizzes.sort((a, b) => b.id - a.id);
             renderQuizzes(allQuizzes);
 
             document.addEventListener('submit', function (e) {
                 if (e.target && e.target.id === 'search-form') {
                     e.preventDefault();
-                    const query = document.getElementById('search-input').value.toLowerCase();
-                    const filtered = allQuizzes.filter(q =>
-                        q.title.toLowerCase().includes(query) || q.category.toLowerCase().includes(query)
-                    );
-                    renderQuizzes(filtered);
+                    const searchInput = document.getElementById('search-input');
+                    if (!searchInput) return;
+
+                    const query = searchInput.value.trim().toLowerCase();
+                    smartQuizFilter(query);
                 }
             });
         });

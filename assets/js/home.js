@@ -1,11 +1,14 @@
 let allArticles = []; 
 
 document.addEventListener("DOMContentLoaded", async function() {
-
     try {
         const response = await fetch('data/articles.json');
         if (!response.ok) throw new Error('Network response was not ok');
         allArticles = await response.json();
+
+        // --- UPDATED: Initial sort by ID (Highest first) ---
+        allArticles.sort((a, b) => b.id - a.id);
+
         renderHomepage(allArticles);
     } catch (error) {
         console.error('Error loading news:', error);
@@ -19,14 +22,12 @@ document.addEventListener("DOMContentLoaded", async function() {
             if (!searchInput) return;
 
             const query = searchInput.value.trim().toLowerCase();
-
             const found = smartFilter(query);
 
             if (!found && query !== "") {
                 const originalPlaceholder = searchInput.placeholder;
                 searchInput.value = ""; 
                 searchInput.placeholder = "No matches found.";
-
                 searchInput.style.outline = "3px solid var(--accent-red)";
 
                 setTimeout(() => {
@@ -39,7 +40,9 @@ document.addEventListener("DOMContentLoaded", async function() {
 });
 
 function smartFilter(query) {
+    // If search is empty, just show everything sorted by ID
     if (!query) {
+        allArticles.sort((a, b) => b.id - a.id);
         renderGrid(allArticles);
         return true;
     }
@@ -61,18 +64,21 @@ function smartFilter(query) {
         return { ...article, relevanceScore: score };
     });
 
-    const filtered = scoredArticles
-        .filter(article => article.relevanceScore > 0)
-        .sort((a, b) => b.relevanceScore - a.relevanceScore);
+    // --- UPDATED: No filtering, just sorting ---
+    const reordered = scoredArticles.sort((a, b) => {
+        // 1. Primary Sort: Relevance Score (Highest first)
+        if (b.relevanceScore !== a.relevanceScore) {
+            return b.relevanceScore - a.relevanceScore;
+        }
+        // 2. Secondary Sort: ID (Highest/Newest first)
+        return b.id - a.id;
+    });
 
-    if (filtered.length > 0) {
-        renderGrid(filtered);
-        return true;
-    } else {
+    renderGrid(reordered);
 
-        renderGrid(allArticles);
-        return false;
-    }
+    // Check if any match was actually found to return status for the search UI
+    const hasMatch = reordered.some(article => article.relevanceScore > 0);
+    return hasMatch; 
 }
 
 function renderGrid(articles) {
