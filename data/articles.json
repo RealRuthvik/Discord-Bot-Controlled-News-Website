@@ -11,7 +11,7 @@
         "date": "2025-12-18",
         "image": "featured-the-2025-meme-rewind-the-12-viral-memes-that-defined-the-year.gif",
         "link": "/articles/2025/the-2025-meme-rewind-the-12-viral-memes-that-defined-the-year.html",
-        "isFeatured": false,
+        "isFeatured": true,
         "content": [
             {
                 "heading": "#1 THE Squid Game Salesman",
@@ -159,7 +159,7 @@
         "date": "2025-12-18",
         "image": "featured-the-6-17-tragedy-how-skycrab1-lost-the-greatest-minecraft-run-ever.jpg",
         "link": "/articles/2025/the-6-17-tragedy-how-skycrab1-lost-the-greatest-minecraft-run-ever.html",
-        "isFeatured": true,
+        "isFeatured": false,
         "content": [
             {
                 "heading": "Skycrab1's 6:17 Minecraft Speedrun Choke",

@@ -5,13 +5,13 @@ main {
 }
 
 .hero-headline {
-    background-color: wheat; 
+    background-color: rgba(172, 237, 81); 
     border: 3px solid var(--border-color);
     border-radius: 12px;
     padding: 30px;
     font-size: 2.2rem;
     text-align: center;
-    transform: rotate(-1deg); 
+    transform: rotate(-2deg); 
     margin-bottom: 50px;
     box-shadow: 8px 8px 0px var(--border-color);
     cursor: pointer;
@@ -20,8 +20,8 @@ main {
 }
 
 .hero-headline:hover {
-    transform: rotate(0deg) scale(1.02);
-    background-color: rgb(255, 240, 214);
+    transform: rotate(0deg) scale(1.05);
+    background-color: rgb(132, 226, 0);
 }
 
 .feed-grid {
@@ -32,10 +32,10 @@ main {
 
 .card {
     background-color: var(--bg-card);
-    border: 3px solid var(--border-color);
-    border-radius: 12px;
+    border: 9px solid black;
+    border-radius: 4px;
     padding: 20px;
-    box-shadow: 6px 6px 0px var(--border-color);
+    box-shadow: 10px 10px 50px var(--border-color);
     transition: transform 0.2s;
     display: flex;
     flex-direction: column;
@@ -84,7 +84,7 @@ main {
 
 .read-more-btn {
     display: block; width: 100%; padding: 12px;
-    background-color: var(--bg-main);
+    background-color: rgba(253, 69, 180);
     border: 3px solid var(--border-color);
     border-radius: 8px;
     color: var(--text-dark); 
@@ -94,8 +94,7 @@ main {
 }
 
 .read-more-btn:hover { 
-    background-color: var(--accent-red);
-    color: white;
+    background-color: rgb(255, 0, 157);
     transform: translate(-2px, -2px);
     box-shadow: 5px 5px 0px var(--border-color);
 }

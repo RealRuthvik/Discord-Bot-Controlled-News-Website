@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The 2026 Rice Purity Test - Quiz | The Internet Arcade</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/home.css">
+    <style>
+        main {
+            display: flex;
+            justify-content: center;
+            padding: 20px 20px;
+        }
+
+        .quiz-container {
+            background-color: var(--bg-card);
+            border: 4px solid var(--border-color);
+            padding: 2.5rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 12px 12px 0px var(--accent-blue);
+        }
+
+        .funny-header {
+            background-color: #fffacd;
+            border: 4px solid var(--border-color);
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 40px;
+            transform: rotate(1deg);
+            box-shadow: 6px 6px 0px var(--border-color);
+        }
+
+        .funny-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .funny-header p {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin: 0;
+            color: var(--text-dark);
+        }
+
+        .instruction-box {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-family: monospace;
+            font-size: 1rem;
+            border: 3px solid transparent;
+        }
+
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 12px;
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.1s;
+            font-weight: 500;
+        }
+
+        .checkbox-label:hover {
+            background-color: var(--accent-blue);
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0px black;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: var(--text-dark);
+        }
+
+        .strikethrough {
+            text-decoration: line-through;
+            opacity: 0.6;
+            background-color: #ffcccb !important;
+            /* Light red background when checked */
+        }
+
+        /* Result Display */
+        #result-display {
+            display: none;
+            text-align: center;
+            margin-top: 40px;
+            padding: 40px;
+            border: 5px solid var(--border-color);
+            background-color: var(--accent-red);
+            box-shadow: 10px 10px 0px black;
+            color: white;
+        }
+
+        .score-number {
+            font-size: 6rem;
+            line-height: 1;
+            font-weight: 900;
+            text-shadow: 5px 5px 0px black;
+            margin: 0;
+        }
+
+        .score-title {
+            font-size: 2rem;
+            text-transform: uppercase;
+            margin: 20px 0;
+            text-shadow: 2px 2px 0px black;
+        }
+
+        .section-title {
+            margin-top: 30px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: 900;
+            color: var(--text-dark);
+            border-bottom: 3px dashed var(--border-color);
+            display: inline-block;
+        }
+
+        .back-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .back-btn {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 15px 30px;
+            font-weight: 900;
+            text-decoration: none;
+            text-transform: uppercase;
+            border: 3px solid transparent;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            border: 3px solid var(--border-color);
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="quiz-container">
+            <div class="funny-header" id="funny-message">
+                <h1>The 2026 Rice Purity Test</h1>
+                <p>Caution: This is a checklist. <br>Click every item you have done. Lower score = More "Experience".
+                </p>
+            </div>
+
+            <div class="instruction-box">
+                STARTING SCORE: 100
+            </div>
+
+            <form id="purity-form">
+                <div class="checklist-grid">
+
+                    <div class="section-title">Level 1: The Basics (Innocent)</div>
+                    <label class="checkbox-label"><input type="checkbox"> Held hands romantically.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Been on a date with someone you liked.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Stayed up all night talking to someone you
+                        were interested in.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Kissed someone on the lips.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Kissed someone with tongue (French
+                        kissed).</label>
+                    <label class="checkbox-label"><input type="checkbox"> Kissed someone on the neck.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Had a hickey visible in public.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Cried over a breakup.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Lied about your age to access a
+                        website.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Stalked a crush's location on a map
+                        app.</label>
+
+                    <div class="section-title">Level 2: Getting Social (Mischievous)</div>
+                    <label class="checkbox-label"><input type="checkbox"> Used a fake ID to buy alcohol or enter a
+                        club.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Been drunk to the point of forgetting parts of
+                        the night.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Vomited in public due to alcohol.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Urinated in a public place (not a
+                        bathroom).</label>
+                    <label class="checkbox-label"><input type="checkbox"> Gone skinny-dipping (swimming naked).</label>
+                    <label class="checkbox-label"><input type="checkbox"> Stolen a street sign, traffic cone, or glass
+                        from a bar.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Danced on a table or bar top.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Been kicked out of a bar or club by
+                        security.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Ghosted someone after going on a date with
+                        them.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Sent a risky text and immediately put your
+                        phone on airplane mode.</label>
+
+                    <div class="section-title">Level 3: Getting Intimate (Heating Up)</div>
+                    <label class="checkbox-label"><input type="checkbox"> Seen another person naked in person.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Been seen naked by another person.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Showered or bathed with another
+                        person.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Touched someone's genitals with your
+                        hands.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Had your genitals touched by someone else's
+                        hands.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Performed oral sex on someone.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Received oral sex from someone.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Slept in the same bed as someone you were
+                        attracted to (without sex).</label>
+                    <label class="checkbox-label"><input type="checkbox"> Sent a nude photo or video of
+                        yourself.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Received a nude photo or video (that you asked
+                        for).</label>
+
+                    <div class="section-title">Level 4: The Deed (Adult)</div>
+                    <label class="checkbox-label"><input type="checkbox"> Had sexual intercourse.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Had sexual intercourse in a bed that wasn't
+                        yours.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Had sexual intercourse on the floor.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Had sexual intercourse in a car.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Had sexual intercourse outdoors (camping,
+                        beach, woods).</label>
+                    <label class="checkbox-label"><input type="checkbox"> Had sexual intercourse in a pool or hot
+                        tub.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Had sexual intercourse while parents or
+                        roommates were in the next room.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Had sexual intercourse more than 3 times in 24
+                        hours.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Had a one-night stand (sex with someone you
+                        didn't see again).</label>
+                    <label class="checkbox-label"><input type="checkbox"> Had a "Friends with Benefits"
+                        relationship.</label>
+
+                    <div class="section-title">Level 5: Unhinged (Wild)</div>
+                    <label class="checkbox-label"><input type="checkbox"> Had sexual intercourse with someone you met
+                        within 24 hours.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Had sexual intercourse in a public place where
+                        you could have been caught.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Had sexual intercourse in an airplane (Mile
+                        High Club).</label>
+                    <label class="checkbox-label"><input type="checkbox"> Had sexual intercourse with more than one
+                        person at the same time (Threesome/Orgy).</label>
+                    <label class="checkbox-label"><input type="checkbox"> Cheated on a partner during a monogamous
+                        relationship.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Helped someone else cheat on their
+                        partner.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Used handcuffs or physical restraints during
+                        sex.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Filmed yourself having sex.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Paid for or received money/gifts for sexual
+                        acts.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Had the police called on you for something you
+                        did.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Been arrested and put in a police car.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Used illegal drugs (beyond marijuana).</label>
+                    <label class="checkbox-label"><input type="checkbox"> Woke up in a stranger's house with no memory
+                        of how you got there.</label>
+                    <label class="checkbox-label"><input type="checkbox"> Had a pregnancy scare (or caused one).</label>
+
+                </div>
+
+                <div class="submit-container" style="margin-top: 30px;">
+                    <button type="submit" class="read-more-btn"
+                        style="width: 100%; font-size: 1.5rem; background-color: var(--accent-yellow);">CALCULATE MY
+                        SCORE</button>
+                </div>
+            </form>
+
+            <div id="result-display">
+                <h2>YOUR PURITY SCORE</h2>
+                <p class="score-number" id="final-score">100</p>
+                <div class="score-title" id="score-title">ANGEL</div>
+                <p id="score-description" style="font-weight: bold; font-size: 1.2rem;"></p>
+                <button class="read-more-btn retake-btn" style="margin-top: 20px;" onclick="location.reload()">CLEAR
+                    EVIDENCE (RETAKE)</button>
+            </div>
+
+            <div class="back-container">
+                <a href="/quizzes.html" class="back-btn">⬅ More Quizzes</a>
+            </div>
+        </div>
+    </main>
+    <div id="footer-placeholder"></div>
+
+    <script src="/assets/js/global.js"></script>
+    <script>
+        // Checkbox strikethrough logic
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(box => {
+            box.addEventListener('change', function () {
+                if (this.checked) {
+                    this.parentElement.classList.add('strikethrough');
+                } else {
+                    this.parentElement.classList.remove('strikethrough');
+                }
+            });
+        });
+
+        document.getElementById('purity-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Calculate Score
+            const totalItems = document.querySelectorAll('input[type="checkbox"]').length; // Should be 54 items
+            const checkedCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
+
+            // Standard Purity Test Math scaled to 100
+            // Score = 100 - ((Checked / Total) * 100)
+            const rawScore = 100 - ((checkedCount / totalItems) * 100);
+            const score = Math.round(rawScore);
+
+            let title = "";
+            let description = "";
+            let color = "";
+
+            if (score >= 90) {
+                title = "PURE AS GOLD";
+                description = "You are an angel. Or you just never leave your house. Either way, very wholesome.";
+                color = "#81C784"; // Green
+            } else if (score >= 70) {
+                title = "SOCIALLY ACTIVE";
+                description = "You've lived a little, had some fun, maybe kissed a few frogs. Pretty standard stuff.";
+                color = "#4DB6AC"; // Teal
+            } else if (score >= 50) {
+                title = "MODERATELY CORRUPT";
+                description = "Okay, you've definitely seen some things. You have stories you probably shouldn't tell at Thanksgiving.";
+                color = "#FFB74D"; // Orange
+            } else if (score >= 30) {
+                title = "TOTAL DEGENERATE";
+                description = "Wow. You are living life in the fast lane (and possibly the illegal lane). Respect, but also, seek help.";
+                color = "#FF6B6B"; // Red
+            } else {
+                title = "ELDRITCH HORROR";
+                description = "How are you not in jail? Or dead? You are a menace to society. Go touch grass immediately.";
+                color = "#2D2D2D"; // Dark
+            }
+
+            // Hide Form
+            document.getElementById('purity-form').style.display = 'none';
+            document.getElementById('funny-message').style.display = 'none';
+            document.querySelector('.instruction-box').style.display = 'none';
+
+            // Show Result
+            const resultBox = document.getElementById('result-display');
+            resultBox.style.display = 'block';
+            resultBox.style.backgroundColor = color;
+
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('score-title').innerText = title;
+            document.getElementById('score-description').innerText = description;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+
+</html>

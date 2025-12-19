@@ -1,7 +1,7 @@
 :root {
-    --bg-main: #dedad0;
+    --bg-main: #ffffff;
     --bg-card: #FFF8F0;
-    --bg-header: #bbb8b1;
+    --bg-header: rgba(2, 13, 253);
     --accent-blue: #64B5F6;
     --accent-green: #81C784;
     --accent-red: #FF6B6B;
@@ -11,6 +11,7 @@
     --accent-yellow: #ecff1f;
     --text-dark: #2D2D2D;
     --border-color: #2D2D2D;
+    --grid-color: rgba(45, 45, 45, 1); 
 }
 
 body {
@@ -19,8 +20,10 @@ body {
     color: var(--text-dark);
     margin: 0;
     padding: 0;
-    background-image: radial-gradient(var(--text-dark) 1.5px, transparent 1.5px);
-    background-size: 25px 25px;
+    background-image: 
+        linear-gradient(to right, var(--grid-color) 1.5px, transparent 1.5px),
+        linear-gradient(to bottom, var(--grid-color) 1.5px, transparent 1.5px);
+    background-size: 40px 40px;
     background-position: 0 0;
 }
 
@@ -32,7 +35,7 @@ h1, h2, h3 {
 }
 
 header {
-    background-color: var(--bg-header);
+    background-color: rgb(97, 170, 235);
     border-bottom: 4px solid var(--border-color);
     padding: 1.2rem 1rem;
     display: flex;
@@ -41,35 +44,35 @@ header {
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0px 4px 0px rgba(0,0,0,0.15);
+    box-shadow: 6px 6px 0px rgba(0,0,0);
 }
 
 .brand { 
     font-size: 2rem; 
     font-style: italic;
     font-weight: 900;
-    color: var(--text-dark);
-    text-shadow: 3px 3px 0px var(--bg-card);
+    color: white;
+    text-shadow: 3px 3px 0px black;
 }
 
 nav a {
     text-decoration: none; 
-    color: var(--text-dark); 
+    color: black; 
     font-weight: 800;
     margin-left: 12px; 
     border: 3px solid var(--border-color); 
     padding: 8px 18px;
-    background-color: var(--bg-card); 
+    background-color: rgba(253, 69, 180); 
     border-radius: 8px; 
-    box-shadow: 4px 4px 0px var(--border-color);
+    box-shadow: 4px 4px 0px black;
     transition: transform 0.1s, box-shadow 0.1s;
     display: inline-block;
 }
 
 nav a:hover {
-    background-color: var(--accent-blue); 
+    background-color: rgb(255, 0, 157); 
     transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0px var(--border-color);
+    box-shadow: 6px 6px 0px black;
 }
 
 footer {

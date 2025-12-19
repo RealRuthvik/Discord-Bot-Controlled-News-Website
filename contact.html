@@ -19,7 +19,7 @@
             padding: 3rem;
             max-width: 700px;
             width: 100%;
-            box-shadow: 15px 15px 0px var(--accent-green);
+            box-shadow: 15px 15px 50px black;
             box-sizing: border-box;
         }
 
@@ -27,16 +27,17 @@
             font-size: 3.5rem;
             line-height: 1;
             margin-bottom: 30px;
-            color: var(--text-dark);
+            color: white;
+            -webkit-text-stroke: black 2px;
             text-transform: uppercase;
-            text-shadow: 4px 4px 0px var(--bg-header);
+            text-shadow: 5px 5px 0.2px black;
         }
 
         section h2 {
             font-size: 1.8rem;
             margin-bottom: 1.5rem;
             margin-top: 2rem;
-            border-bottom: 4px solid #9f9797;
+            border-bottom: 4px solid #521c0a;
             display: inline-block;
         }
 
@@ -99,7 +100,7 @@
         }
 
         .submit-btn {
-            background-color: #FAFF00;
+            background-color: #fdff78;
             color: var(--text-dark);
             padding: 15px 40px;
             font-weight: 900;
@@ -115,7 +116,7 @@
         .submit-btn:hover {
             transform: translate(-2px, -2px);
             box-shadow: 8px 8px 0px var(--border-color);
-            background-color: var(--accent-green);
+            background-color: #fbff00;
         }
 
         .back-container {
@@ -133,13 +134,13 @@
             border: 3px solid transparent;
             font-size: 1.1rem;
             display: inline-block;
+            transition: 0.2s;
         }
 
         .back-btn:hover {
-            background-color: rgb(135, 135, 135);
+            background-color: var(--bg-main);
             color: var(--text-dark);
             border: 3px solid var(--border-color);
-            box-shadow: 5px 5px 0px var(--border-color);
         }
 
         @media(max-width: 600px) {
