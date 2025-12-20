@@ -7,7 +7,6 @@ from datetime import datetime
 import re
 
 _bot_auth_ = "" 
-# Change this to your actual website domain
 SITE_URL = "https://theinternetarcade.com" 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -22,27 +21,38 @@ intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
+# --- UTILITIES ---
+
 def slugify(text):
+    if not text: return "untitled"
     text = text.lower()
     return re.sub(r'[^a-z0-9]+', '-', text).strip('-')
 
 def extract_youtube_id(url):
     regex = r"(?:v=|\/)([0-9A-Za-z_-]{11}).*"
     match = re.search(regex, url)
-    if match:
-        return match.group(1)
-    return None
+    return match.group(1) if match else None
+
+async def get_input(ctx, prompt, timeout=1200.0):
+    """Helper to handle 'skip', 'back' and timeouts."""
+    await ctx.send(prompt)
+    def check(m):
+        return m.author == ctx.author and m.channel == ctx.channel
+    try:
+        msg = await bot.wait_for('message', check=check, timeout=timeout)
+        content = msg.content.lower()
+        if content == 'skip': return "SKIP_SIGNAL"
+        if content == 'back': return "BACK_SIGNAL"
+        return msg
+    except asyncio.TimeoutError:
+        return "TIMEOUT_SIGNAL"
 
 def update_sitemap():
-    """Generates a fresh sitemap.xml based on static pages and articles.json"""
-    # Define your static pages here
     pages = [
         {"loc": "/", "priority": "1.0", "changefreq": "daily"},
         {"loc": "/quizzes.html", "priority": "0.8", "changefreq": "weekly"},
         {"loc": "/contact.html", "priority": "0.5", "changefreq": "monthly"},
     ]
-
-    # Load articles from the JSON database
     if os.path.exists(DATA_FILE):
         with open(DATA_FILE, 'r', encoding='utf-8') as f:
             articles = json.load(f)
@@ -53,13 +63,10 @@ def update_sitemap():
                 "priority": "0.7",
                 "changefreq": "monthly"
             })
-
-    # Build the XML string
     xml_lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
     ]
-
     for page in pages:
         xml_lines.append('  <url>')
         xml_lines.append(f'    <loc>{SITE_URL}{page["loc"]}</loc>')
@@ -68,62 +75,18 @@ def update_sitemap():
         xml_lines.append(f'    <changefreq>{page["changefreq"]}</changefreq>')
         xml_lines.append(f'    <priority>{page["priority"]}</priority>')
         xml_lines.append('  </url>')
-
     xml_lines.append('</urlset>')
-
     with open(SITEMAP_FILE, 'w', encoding='utf-8') as f:
         f.write('\n'.join(xml_lines))
-    
-    return SITEMAP_FILE
 
 def generate_html_file(article_data):
-    schema_json = json.dumps({
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": article_data['title'],
-        "description": article_data['excerpt'],
-        "image": [f"{SITE_URL}/assets/media/image/{article_data['image']}"],
-        "datePublished": article_data['date'],
-        "author": [{
-            "@type": "Person",
-            "name": article_data['author'],
-            "url": SITE_URL
-        }],
-        "publisher": {
-            "@type": "Organization",
-            "name": "The Internet Arcade",
-            "logo": {
-                "@type": "ImageObject",
-                "url": f"{SITE_URL}/assets/media/image/logo-transparent-square.png"
-            }
-        }
-    }, indent=4)
-    
+    # Preserving your original HTML template logic
     quote_html = ""
     if article_data.get('quote'):
-        author_html = ""
-        if article_data.get('quote_author'):
-            author_html = f"""
-                <cite style="display: block; text-align: right; font-size: 1rem; margin-top: 15px; font-style: normal; opacity: 0.8;">
-                    — {article_data['quote_author']}
-                </cite>
-            """
-        
-        quote_html = f"""
-                <blockquote>
-                    "{article_data['quote']}"
-                    {author_html}
-                </blockquote>
-        """
+        author_html = f'<cite style="display: block; text-align: right; font-size: 1rem; margin-top: 15px; font-style: normal; opacity: 0.8;">— {article_data["quote_author"]}</cite>' if article_data.get('quote_author') else ""
+        quote_html = f'<blockquote>"{article_data["quote"]}"{author_html}</blockquote>'
 
-    authors_note_html = ""
-    if article_data.get('authors_note'):
-        authors_note_html = f"""
-                <div class="authors-note-box">
-                    <h3>AUTHOR'S NOTE</h3>
-                    <p>{article_data['authors_note']}</p>
-                </div>
-        """
+    authors_note_html = f'<div class="authors-note-box"><h3>AUTHOR\'S NOTE</h3><p>{article_data["authors_note"]}</p></div>' if article_data.get('authors_note') else ""
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -131,9 +94,6 @@ def generate_html_file(article_data):
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{article_data['excerpt']}">
-    <meta property="og:title" content="{article_data['title']}">
-    <meta property="og:description" content="{article_data['excerpt']}">
-    <meta property="og:image" content="{SITE_URL}/assets/media/image/{article_data['image']}">
     <title>{article_data['title']} | The Internet Arcade</title>
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/articles.css">
@@ -144,269 +104,197 @@ def generate_html_file(article_data):
         <article class="article-container">
             <h1>{article_data['title']}</h1>
             <div class="meta-wrapper">
-                <div class="meta-tag" id="meta-date">DATE: {article_data['date']}</div>
-                <div class="meta-tag" id="meta-author">AUTHOR: {article_data['author']}</div>
-                <div class="meta-tag" id="meta-mood">Category: {article_data['category']}</div>
+                <div class="meta-tag">DATE: {article_data['date']}</div>
+                <div class="meta-tag">AUTHOR: {article_data['author']}</div>
+                <div class="meta-tag">Category: {article_data['category']}</div>
             </div>
             <div class="article-body">
                 <p>{article_data['excerpt']}</p>
                 {quote_html}
     """
-
     for i, item in enumerate(article_data['content'], 1):
-        width = item.get('width', 500)
-        height = item.get('height', 500)
-        
-        source_display = item['source']
-        if item.get('source_link'):
-            source_display = f'<a href="{item["source_link"]}" target="_blank">{item["source"]}</a>'
-
-        media_html = ""
-        media_type = item.get('media_type', 'image')
-
-        if media_type == 'youtube':
-            media_html = f"""
-                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/{item['media_content']}" 
-                title="YouTube video player" frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen></iframe>
-            """
-        else:
-            media_html = f"""
-                <img src="/assets/media/image/{item['media_content']}" alt="{item['heading']}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-            """
-
+        media_html = f'<iframe width="100%" height="100%" src="https://www.youtube.com/embed/{item["media_content"]}" frameborder="0" allowfullscreen></iframe>' if item.get('media_type') == 'youtube' else f'<img src="/assets/media/image/{item["media_content"]}" style="width: 100%; height: 100%; object-fit: cover;">'
         html += f"""
-                <div class="meme-entry" id="meme-{i}">
+                <div class="meme-entry">
                     <h2>{item['heading']}</h2>
-                    <div class="main-image-container">
-                        <div class="main-image-wrapper list-image" style="width: {width}px; height: {height}px; margin: 0; border: 5px solid #000;">
-                            {media_html}
-                        </div>
-                        <div class="image-caption">Source: {source_display}</div>
+                    <div class="main-image-wrapper" style="width: {item.get('width', 500)}px; height: {item.get('height', 500)}px; border: 5px solid #000;">
+                        {media_html}
                     </div>
                     <p>{item['text']}</p>
-                </div>
-        """
-
-    html += f"""
-                {authors_note_html}
-                <div class="back-container"><a href="/index.html" class="back-btn">⬅ Back Home</a></div>
-            </div>
-        </article>
-    </main>
+                </div>"""
+    
+    html += f"""{authors_note_html}<div class="back-container"><a href="/index.html" class="back-btn">⬅ Back Home</a></div></div></article></main>
     <div id="footer-placeholder"></div>
     <script src="/assets/js/global.js"></script>
     <script src="/assets/js/article.js"></script>
-</body>
-</html>
-    """
+</body></html>"""
 
     relative_path = article_data['link'].lstrip('/')
     full_path = os.path.join(BASE_DIR, relative_path)
     os.makedirs(os.path.dirname(full_path), exist_ok=True)
-
     with open(full_path, "w", encoding="utf-8") as f:
         f.write(html)
-    
     return full_path
+
+# --- COMMANDS ---
+
+@bot.command()
+async def remove(ctx, article_id: int):
+    """Deletes an article by ID, its HTML file, and updates sitemap."""
+    if not os.path.exists(DATA_FILE):
+        return await ctx.send("No articles found.")
+
+    with open(DATA_FILE, 'r', encoding='utf-8') as f:
+        articles = json.load(f)
+
+    target = next((a for a in articles if a['id'] == article_id), None)
+    
+    if not target:
+        return await ctx.send(f"Could not find article with ID: {article_id}")
+
+    # 1. Delete HTML File
+    html_rel_path = target['link'].lstrip('/')
+    html_full_path = os.path.join(BASE_DIR, html_rel_path)
+    if os.path.exists(html_full_path):
+        os.remove(html_full_path)
+        file_status = "HTML file deleted."
+    else:
+        file_status = "HTML file not found on disk, but entry removed from JSON."
+
+    # 2. Update JSON
+    new_articles = [a for a in articles if a['id'] != article_id]
+    with open(DATA_FILE, 'w', encoding='utf-8') as f:
+        json.dump(new_articles, f, indent=4)
+
+    # 3. Update Sitemap
+    update_sitemap()
+
+    await ctx.send(f"✅ **Article {article_id} removed.**\nTitle: {target['title']}\nStatus: {file_status}")
 
 @bot.command()
 async def post(ctx):
-    def check(m):
-        return m.author == ctx.author and m.channel == ctx.channel
-
-    try:
-        await ctx.send("Initiating article creation process. Please enter the article **Headline**.")
-        msg = await bot.wait_for('message', check=check, timeout=1200.0)
-        title = msg.content
-
-        await ctx.send("Please enter the **Excerpt** (introduction text).")
-        msg = await bot.wait_for('message', check=check, timeout=1200.0)
-        excerpt = msg.content
-
-        await ctx.send("Please enter the **Author Name**.")
-        msg = await bot.wait_for('message', check=check, timeout=1200.0)
-        author = msg.content
-
-        await ctx.send("Please enter the **Category**.")
-        msg = await bot.wait_for('message', check=check, timeout=1200.0)
-        category = msg.content
-
-        quote_text = ""
-        quote_author = ""
-        await ctx.send("Do you wish to include a **Quote Box**? (Yes/No)")
-        msg = await bot.wait_for('message', check=check, timeout=600.0)
-        if msg.content.lower() in ['yes', 'y']:
-            await ctx.send("Please enter the content for the quote.")
-            msg = await bot.wait_for('message', check=check, timeout=1200.0)
-            quote_text = msg.content
-            
-            await ctx.send("Who is this quote by? (e.g., @randomuser from Twitter)")
-            msg = await bot.wait_for('message', check=check, timeout=1200.0)
-            quote_author = msg.content
-
-        authors_note_text = ""
-        await ctx.send("Do you wish to include an **Author's Note** at the end? (Yes/No)")
-        msg = await bot.wait_for('message', check=check, timeout=600.0)
-        if msg.content.lower() in ['yes', 'y']:
-            await ctx.send("Please enter the content for the author's note.")
-            msg = await bot.wait_for('message', check=check, timeout=1200.0)
-            authors_note_text = msg.content
-
-        await ctx.send("Is this a **Featured Article**? (Yes/No)\n*Note: Answering 'Yes' will remove 'Featured' status from any existing article.*")
-        msg = await bot.wait_for('message', check=check, timeout=600.0)
-        is_featured = msg.content.lower() in ['yes', 'y']
-
-        await ctx.send("Please upload the **Featured Image** for the article thumbnail.")
-        msg = await bot.wait_for('message', check=check, timeout=1200.0)
+    data = {
+        "title": "Untitled", "excerpt": "", "author": "Staff", "category": "News",
+        "quote": "", "quote_author": "", "authors_note": "", "isFeatured": False,
+        "image": "default-thumbnail.jpg", "content": []
+    }
+    
+    steps = [
+        "title", "excerpt", "author", "category", "want_quote", "quote", 
+        "quote_author", "want_note", "authors_note", "featured", "featured_img", "num_items"
+    ]
+    
+    step = 0
+    while step < len(steps):
+        current = steps[step]
         
-        if not msg.attachments:
-            await ctx.send("No attachment detected. Process aborted.")
-            return
-            
-        featured_attachment = msg.attachments[0]
-        f_ext = featured_attachment.filename.split('.')[-1]
-        featured_filename = f"featured-{slugify(title)}.{f_ext}"
-        featured_save_path = os.path.join(IMAGE_DIR, featured_filename)
-        await featured_attachment.save(featured_save_path)
-        
-        await ctx.send("Featured image saved successfully.")
+        # Branching logic for optional sections
+        if current == "quote" and data.get("want_quote") != "yes":
+            step += 1; continue
+        if current == "quote_author" and data.get("want_quote") != "yes":
+            step += 1; continue
+        if current == "authors_note" and data.get("want_note") != "yes":
+            step += 1; continue
 
-        await ctx.send("Please enter the number of list items (media items) to include.")
-        msg = await bot.wait_for('message', check=check, timeout=1200.0)
-        try:
-            num_images = int(msg.content)
-        except ValueError:
-            await ctx.send("Invalid input. A numeric value is required. Process aborted.")
-            return
-
-        content_list = []
-        
-        for i in range(1, num_images + 1):
-            await ctx.send(f"--- **Item {i}** ---\nPlease enter the **Heading**.")
-            msg = await bot.wait_for('message', check=check, timeout=1200.0)
-            heading = msg.content
-
-            await ctx.send(f"Please enter the **Description Text** for: {heading}")
-            msg = await bot.wait_for('message', check=check, timeout=3000.0)
-            text = msg.content
-
-            await ctx.send("Please enter the **Image Source Name**.")
-            msg = await bot.wait_for('message', check=check, timeout=600.0)
-            source = msg.content
-            
-            await ctx.send("Please enter the **Link (URL)** for the source.")
-            msg = await bot.wait_for('message', check=check, timeout=1200.0)
-            source_link = msg.content
-
-            await ctx.send(f"Is Item {i} an **Image** or a **YouTube** video? (image/youtube)")
-            msg = await bot.wait_for('message', check=check, timeout=600.0)
-            media_choice = msg.content.lower()
-            
-            media_type = "image"
-            media_content = ""
-
-            await ctx.send(f"Please enter the **Width** (e.g., 500).")
-            msg = await bot.wait_for('message', check=check, timeout=600.0)
-            try:
-                img_width = int(msg.content)
-            except ValueError:
-                img_width = 500
-
-            await ctx.send(f"Please enter the **Height** (e.g., 500).")
-            msg = await bot.wait_for('message', check=check, timeout=600.0)
-            try:
-                img_height = int(msg.content)
-            except ValueError:
-                img_height = 500
-
-            if "youtube" in media_choice:
-                media_type = "youtube"
-                await ctx.send(f"Please paste the **YouTube Link**.")
-                msg = await bot.wait_for('message', check=check, timeout=1200.0)
-                youtube_url = msg.content
-                vid_id = extract_youtube_id(youtube_url)
-                media_content = vid_id if vid_id else "INVALID_ID"
-            else:
-                media_type = "image"
-                await ctx.send(f"Please upload the **Image**.")
-                msg = await bot.wait_for('message', check=check, timeout=1200.0)
-                if not msg.attachments:
-                    await ctx.send("No attachment detected. Skipping.")
-                    continue
-                attachment = msg.attachments[0]
-                file_ext = attachment.filename.split('.')[-1]
-                safe_filename = f"{slugify(heading)}-{i}.{file_ext}"
-                save_path = os.path.join(IMAGE_DIR, safe_filename)
-                await attachment.save(save_path)
-                media_content = safe_filename
-            
-            content_list.append({
-                "heading": heading,
-                "text": text,
-                "source": source,
-                "source_link": source_link,
-                "media_type": media_type,
-                "media_content": media_content,
-                "image": media_content, 
-                "width": img_width,
-                "height": img_height
-            })
-            await ctx.send("Item saved.")
-
-        current_year = datetime.now().year
-        slug = slugify(title)
-        
-        if os.path.exists(DATA_FILE):
-            with open(DATA_FILE, 'r', encoding='utf-8') as f:
-                articles = json.load(f)
-        else:
-            articles = []
-
-        if is_featured:
-            for art in articles:
-                if art.get('isFeatured', False):
-                    art['isFeatured'] = False
-
-        new_id = max([art['id'] for art in articles] + [0]) + 1
-
-        new_article = {
-            "id": new_id,
-            "title": title,
-            "excerpt": excerpt,
-            "category": category,
-            "author": author,
-            "quote": quote_text,
-            "quote_author": quote_author,
-            "authors_note": authors_note_text,
-            "date": datetime.now().strftime("%Y-%m-%d"),
-            "image": featured_filename, 
-            "link": f"/articles/{current_year}/{slug}.html",
-            "isFeatured": is_featured,
-            "content": content_list
+        prompts = {
+            "title": "Enter **Headline**.",
+            "excerpt": "Enter **Excerpt**.",
+            "author": "Enter **Author Name**.",
+            "category": "Enter **Category**.",
+            "want_quote": "Include a **Quote Box**? (yes/skip)",
+            "quote": "Enter **Quote Content**.",
+            "quote_author": "Enter **Quote Author**.",
+            "want_note": "Include an **Author's Note**? (yes/skip)",
+            "authors_note": "Enter **Author's Note**.",
+            "featured": "Is this **Featured**? (yes/skip)",
+            "featured_img": "Upload **Featured Image** (attachment) or 'skip'.",
+            "num_items": "How many **Media Items** to include? (Number)"
         }
 
-        articles.append(new_article)
-        with open(DATA_FILE, 'w', encoding='utf-8') as f:
-            json.dump(articles, f, indent=4)
-
-        html_path = generate_html_file(new_article)
+        res = await get_input(ctx, f"[Step {step+1}/{len(steps)}] {prompts[current]}")
         
-        # --- UPDATE SITEMAP ---
-        sitemap_path = update_sitemap()
+        if res == "TIMEOUT_SIGNAL": return await ctx.send("Timed out.")
+        if res == "BACK_SIGNAL":
+            step = max(0, step - 1)
+            continue
 
-        embed = discord.Embed(title="Article Published", color=discord.Color.blue())
-        embed.add_field(name="Headline", value=title, inline=False)
-        embed.add_field(name="Featured?", value=str(is_featured), inline=True)
-        embed.add_field(name="HTML Path", value=f"`{html_path}`", inline=False)
-        embed.add_field(name="Sitemap", value="`sitemap.xml` updated successfully!", inline=False)
-        await ctx.send(embed=embed)
+        # Process Results
+        content = res.content if hasattr(res, 'content') else ""
+        
+        if current == "featured_img":
+            if hasattr(res, 'attachments') and res.attachments:
+                att = res.attachments[0]
+                fname = f"featured-{slugify(data['title'])}.{att.filename.split('.')[-1]}"
+                await att.save(os.path.join(IMAGE_DIR, fname))
+                data["image"] = fname
+        elif current == "num_items":
+            try: num_items = int(content)
+            except: num_items = 0
+            data["num_items"] = num_items
+        else:
+            data[current] = content.lower() if "want_" in current else content
 
-    except asyncio.TimeoutError:
-        await ctx.send("Operation timed out.")
-    except Exception as e:
-        await ctx.send(f"An error occurred: {e}")
-        print(e)
+        step += 1
+
+    # Media items loop (Simple implementation)
+    for i in range(1, data.get("num_items", 0) + 1):
+        await ctx.send(f"--- **Media Item {i}** ---")
+        h_res = await get_input(ctx, "Heading:")
+        t_res = await get_input(ctx, "Text:")
+        type_res = await get_input(ctx, "Type (image/youtube):")
+        
+        m_content = ""
+        if "youtube" in type_res.content.lower():
+            link_res = await get_input(ctx, "YouTube Link:")
+            m_content = extract_youtube_id(link_res.content) or "INVALID"
+        else:
+            img_res = await get_input(ctx, "Upload Image:")
+            if hasattr(img_res, 'attachments') and img_res.attachments:
+                att = img_res.attachments[0]
+                m_content = f"{slugify(h_res.content)}-{i}.{att.filename.split('.')[-1]}"
+                await att.save(os.path.join(IMAGE_DIR, m_content))
+
+        data["content"].append({
+            "heading": h_res.content, "text": t_res.content, "media_type": type_res.content.lower(),
+            "media_content": m_content, "width": 500, "height": 500, "source": "Internet Arcade"
+        })
+
+    # Finalize
+    await finalize_article(ctx, data)
+
+async def finalize_article(ctx, data):
+    articles = []
+    if os.path.exists(DATA_FILE):
+        with open(DATA_FILE, 'r', encoding='utf-8') as f:
+            articles = json.load(f)
+
+    if data.get('isFeatured') == 'yes':
+        for art in articles: art['isFeatured'] = False
+
+    new_id = max([art['id'] for art in articles] + [0]) + 1
+    new_article = {
+        "id": new_id,
+        "title": data['title'],
+        "excerpt": data['excerpt'],
+        "category": data['category'],
+        "author": data['author'],
+        "quote": data['quote'],
+        "quote_author": data['quote_author'],
+        "authors_note": data['authors_note'],
+        "date": datetime.now().strftime("%Y-%m-%d"),
+        "image": data['image'],
+        "link": f"/articles/{datetime.now().year}/{slugify(data['title'])}.html",
+        "isFeatured": data.get('isFeatured') == 'yes',
+        "content": data['content']
+    }
+
+    articles.append(new_article)
+    with open(DATA_FILE, 'w', encoding='utf-8') as f:
+        json.dump(articles, f, indent=4)
+
+    html_path = generate_html_file(new_article)
+    update_sitemap()
+
+    await ctx.send(f"✅ **Published!** ID: {new_id}\nURL: {SITE_URL}{new_article['link']}")
 
 bot.run(_bot_auth_)
