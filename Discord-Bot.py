@@ -6,8 +6,10 @@ import asyncio
 from datetime import datetime
 import re
 
-_bot_auth_ = "" 
-SITE_URL = "https://theinternetarcade.com" 
+# --- CONFIGURATION ---
+_bot_auth_ = ""  # 
+SITE_URL = "https://theinternetarcade.com"
+SITE_NAME = "The Internet Arcade"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_FILE = os.path.join(BASE_DIR, 'data', 'articles.json')
@@ -40,9 +42,9 @@ async def get_input(ctx, prompt, timeout=1200.0):
         return m.author == ctx.author and m.channel == ctx.channel
     try:
         msg = await bot.wait_for('message', check=check, timeout=timeout)
-        content = msg.content.lower()
-        if content == 'skip': return "SKIP_SIGNAL"
-        if content == 'back': return "BACK_SIGNAL"
+        content = msg.content
+        if content.lower() == 'skip': return "SKIP_SIGNAL"
+        if content.lower() == 'back': return "BACK_SIGNAL"
         return msg
     except asyncio.TimeoutError:
         return "TIMEOUT_SIGNAL"
@@ -80,7 +82,6 @@ def update_sitemap():
         f.write('\n'.join(xml_lines))
 
 def generate_html_file(article_data):
-    # Preserving your original HTML template logic
     quote_html = ""
     if article_data.get('quote'):
         author_html = f'<cite style="display: block; text-align: right; font-size: 1rem; margin-top: 15px; font-style: normal; opacity: 0.8;">— {article_data["quote_author"]}</cite>' if article_data.get('quote_author') else ""
@@ -94,7 +95,7 @@ def generate_html_file(article_data):
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{article_data['excerpt']}">
-    <title>{article_data['title']} | The Internet Arcade</title>
+    <title>{article_data['title']} | {SITE_NAME}</title>
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/articles.css">
 </head>
@@ -138,89 +139,124 @@ def generate_html_file(article_data):
 
 # --- COMMANDS ---
 
-@bot.command()
-async def remove(ctx, article_id: int):
-    """Deletes an article by ID, its HTML file, and updates sitemap."""
+@bot.command(name="setf")
+async def set_featured(ctx, article_id: int):
+    """Sets a specific article as featured and updates the JSON data."""
     if not os.path.exists(DATA_FILE):
-        return await ctx.send("No articles found.")
+        return await ctx.send("No articles found to feature.")
 
     with open(DATA_FILE, 'r', encoding='utf-8') as f:
         articles = json.load(f)
 
-    target = next((a for a in articles if a['id'] == article_id), None)
-    
-    if not target:
-        return await ctx.send(f"Could not find article with ID: {article_id}")
+    found = False
+    for art in articles:
+        if art['id'] == article_id:
+            art['isFeatured'] = True
+            found = True
+            title = art['title']
+        else:
+            art['isFeatured'] = False
 
-    # 1. Delete HTML File
+    if not found:
+        return await ctx.send(f"❌ Could not find article with ID: {article_id}")
+
+    with open(DATA_FILE, 'w', encoding='utf-8') as f:
+        json.dump(articles, f, indent=4)
+
+    update_sitemap()
+    await ctx.send(f"⭐ **Featured Article Updated!**\nID: {article_id}\nTitle: {title}")
+
+@bot.command(name="update-domain")
+async def update_domain(ctx, new_domain: str):
+    """Updates domain and asks for a new Brand Name to apply across the project."""
+    global SITE_URL, SITE_NAME
+    
+    # Standardize domain
+    clean_domain = new_domain.replace("https://", "").replace("http://", "").lower()
+    new_site_url = f"https://{clean_domain}"
+    
+    # Ask for Brand Name
+    brand_res = await get_input(ctx, "What is the new **Brand Name**? (e.g., *The Gaming Arcade*)")
+    if isinstance(brand_res, str): return # Timeout or signal
+    new_brand_name = brand_res.content
+
+    # Values to replace
+    old_domain_val = SITE_URL.replace("https://", "").replace("http://", "")
+    old_brand_val = SITE_NAME
+    
+    modified_count = 0
+    for root, dirs, files in os.walk(BASE_DIR):
+        for file in files:
+            if file.endswith(('.html', '.json', '.xml', '.js', '.css', '.py')):
+                file_path = os.path.join(root, file)
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        text = f.read()
+                    
+                    updated = text.replace(old_domain_val, clean_domain)
+                    updated = updated.replace(old_brand_val, new_brand_name)
+                    # Broad replacement for the arcade name specifically
+                    updated = updated.replace("Internet Arcade", new_brand_name)
+                    
+                    if updated != text:
+                        with open(file_path, 'w', encoding='utf-8') as f:
+                            f.write(updated)
+                        modified_count += 1
+                except: continue
+
+    # Update current session
+    SITE_URL = new_site_url
+    SITE_NAME = new_brand_name
+    update_sitemap()
+    
+    await ctx.send(
+        f"✅ **Update Complete!**\n"
+        f"**Domain:** `{clean_domain}`\n**Brand:** `{new_brand_name}`\n"
+        f"**Files Modified:** {modified_count}"
+    )
+
+@bot.command()
+async def remove(ctx, article_id: int):
+    if not os.path.exists(DATA_FILE): return await ctx.send("No articles found.")
+    with open(DATA_FILE, 'r', encoding='utf-8') as f:
+        articles = json.load(f)
+    target = next((a for a in articles if a['id'] == article_id), None)
+    if not target: return await ctx.send(f"Could not find article with ID: {article_id}")
     html_rel_path = target['link'].lstrip('/')
     html_full_path = os.path.join(BASE_DIR, html_rel_path)
     if os.path.exists(html_full_path):
         os.remove(html_full_path)
-        file_status = "HTML file deleted."
-    else:
-        file_status = "HTML file not found on disk, but entry removed from JSON."
-
-    # 2. Update JSON
     new_articles = [a for a in articles if a['id'] != article_id]
     with open(DATA_FILE, 'w', encoding='utf-8') as f:
         json.dump(new_articles, f, indent=4)
-
-    # 3. Update Sitemap
     update_sitemap()
-
-    await ctx.send(f"✅ **Article {article_id} removed.**\nTitle: {target['title']}\nStatus: {file_status}")
+    await ctx.send(f"✅ **Article {article_id} removed.**")
 
 @bot.command()
 async def post(ctx):
     data = {
         "title": "Untitled", "excerpt": "", "author": "Staff", "category": "News",
-        "quote": "", "quote_author": "", "authors_note": "", "isFeatured": False,
+        "quote": "", "quote_author": "", "authors_note": "", "featured": "no",
         "image": "default-thumbnail.jpg", "content": []
     }
-    
-    steps = [
-        "title", "excerpt", "author", "category", "want_quote", "quote", 
-        "quote_author", "want_note", "authors_note", "featured", "featured_img", "num_items"
-    ]
-    
+    steps = ["title", "excerpt", "author", "category", "want_quote", "quote", "quote_author", "want_note", "authors_note", "featured", "featured_img", "num_items"]
     step = 0
     while step < len(steps):
         current = steps[step]
-        
-        # Branching logic for optional sections
-        if current == "quote" and data.get("want_quote") != "yes":
-            step += 1; continue
-        if current == "quote_author" and data.get("want_quote") != "yes":
+        if current in ["quote", "quote_author"] and data.get("want_quote") != "yes":
             step += 1; continue
         if current == "authors_note" and data.get("want_note") != "yes":
             step += 1; continue
-
         prompts = {
-            "title": "Enter **Headline**.",
-            "excerpt": "Enter **Excerpt**.",
-            "author": "Enter **Author Name**.",
-            "category": "Enter **Category**.",
-            "want_quote": "Include a **Quote Box**? (yes/skip)",
-            "quote": "Enter **Quote Content**.",
-            "quote_author": "Enter **Quote Author**.",
-            "want_note": "Include an **Author's Note**? (yes/skip)",
-            "authors_note": "Enter **Author's Note**.",
-            "featured": "Is this **Featured**? (yes/skip)",
-            "featured_img": "Upload **Featured Image** (attachment) or 'skip'.",
-            "num_items": "How many **Media Items** to include? (Number)"
+            "title": "Enter **Headline**.", "excerpt": "Enter **Excerpt**.", "author": "Enter **Author Name**.", "category": "Enter **Category**.",
+            "want_quote": "Include a **Quote Box**? (yes/skip)", "quote": "Enter **Quote Content**.", "quote_author": "Enter **Quote Author**.",
+            "want_note": "Include an **Author's Note**? (yes/skip)", "authors_note": "Enter **Author's Note**.",
+            "featured": "Is this **Featured**? (yes/skip)", "featured_img": "Upload **Featured Image** or 'skip'.", "num_items": "How many **Media Items**? (Number)"
         }
-
         res = await get_input(ctx, f"[Step {step+1}/{len(steps)}] {prompts[current]}")
-        
         if res == "TIMEOUT_SIGNAL": return await ctx.send("Timed out.")
-        if res == "BACK_SIGNAL":
-            step = max(0, step - 1)
-            continue
-
-        # Process Results
+        if res == "BACK_SIGNAL": step = max(0, step - 1); continue
         content = res.content if hasattr(res, 'content') else ""
-        
         if current == "featured_img":
             if hasattr(res, 'attachments') and res.attachments:
                 att = res.attachments[0]
@@ -228,21 +264,16 @@ async def post(ctx):
                 await att.save(os.path.join(IMAGE_DIR, fname))
                 data["image"] = fname
         elif current == "num_items":
-            try: num_items = int(content)
-            except: num_items = 0
-            data["num_items"] = num_items
+            try: data["num_items"] = int(content)
+            except: data["num_items"] = 0
         else:
             data[current] = content.lower() if "want_" in current else content
-
         step += 1
-
-    # Media items loop (Simple implementation)
     for i in range(1, data.get("num_items", 0) + 1):
         await ctx.send(f"--- **Media Item {i}** ---")
         h_res = await get_input(ctx, "Heading:")
         t_res = await get_input(ctx, "Text:")
         type_res = await get_input(ctx, "Type (image/youtube):")
-        
         m_content = ""
         if "youtube" in type_res.content.lower():
             link_res = await get_input(ctx, "YouTube Link:")
@@ -253,13 +284,10 @@ async def post(ctx):
                 att = img_res.attachments[0]
                 m_content = f"{slugify(h_res.content)}-{i}.{att.filename.split('.')[-1]}"
                 await att.save(os.path.join(IMAGE_DIR, m_content))
-
         data["content"].append({
             "heading": h_res.content, "text": t_res.content, "media_type": type_res.content.lower(),
-            "media_content": m_content, "width": 500, "height": 500, "source": "Internet Arcade"
+            "media_content": m_content, "width": 500, "height": 500, "source": SITE_NAME
         })
-
-    # Finalize
     await finalize_article(ctx, data)
 
 async def finalize_article(ctx, data):
@@ -267,34 +295,21 @@ async def finalize_article(ctx, data):
     if os.path.exists(DATA_FILE):
         with open(DATA_FILE, 'r', encoding='utf-8') as f:
             articles = json.load(f)
-
-    if data.get('isFeatured') == 'yes':
+    if data.get('featured') == 'yes':
         for art in articles: art['isFeatured'] = False
-
     new_id = max([art['id'] for art in articles] + [0]) + 1
     new_article = {
-        "id": new_id,
-        "title": data['title'],
-        "excerpt": data['excerpt'],
-        "category": data['category'],
-        "author": data['author'],
-        "quote": data['quote'],
-        "quote_author": data['quote_author'],
-        "authors_note": data['authors_note'],
-        "date": datetime.now().strftime("%Y-%m-%d"),
-        "image": data['image'],
-        "link": f"/articles/{datetime.now().year}/{slugify(data['title'])}.html",
-        "isFeatured": data.get('isFeatured') == 'yes',
-        "content": data['content']
+        "id": new_id, "title": data['title'], "excerpt": data['excerpt'], "category": data['category'],
+        "author": data['author'], "quote": data['quote'], "quote_author": data['quote_author'],
+        "authors_note": data['authors_note'], "date": datetime.now().strftime("%Y-%m-%d"),
+        "image": data['image'], "link": f"/articles/{datetime.now().year}/{slugify(data['title'])}.html",
+        "isFeatured": data.get('featured') == 'yes', "content": data['content']
     }
-
     articles.append(new_article)
     with open(DATA_FILE, 'w', encoding='utf-8') as f:
         json.dump(articles, f, indent=4)
-
-    html_path = generate_html_file(new_article)
+    generate_html_file(new_article)
     update_sitemap()
-
     await ctx.send(f"✅ **Published!** ID: {new_id}\nURL: {SITE_URL}{new_article['link']}")
 
 bot.run(_bot_auth_)
