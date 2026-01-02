@@ -6,8 +6,7 @@ import asyncio
 from datetime import datetime
 import re
 
-# --- CONFIGURATION ---
-_bot_auth_ = ""  # 
+_bot_auth_ = "--Enter Discord Bot Auth Key Here--" 
 SITE_URL = "https://theinternetarcade.com"
 SITE_NAME = "The Internet Arcade"
 
@@ -22,8 +21,6 @@ os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
-
-# --- UTILITIES ---
 
 def slugify(text):
     if not text: return "untitled"
