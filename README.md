@@ -1,6 +1,6 @@
-# **Discord Bot Controlled News Website: Professional News and Assessment Portal**
+# **Discord Bot Controlled News Website: Professional News and Quiz Portal**
 
-This platform is a high-performance web system designed to serve as a centralized hub for news, editorial articles, and interactive assessment modules. The project employs a lightweight, modular architecture that prioritizes scalability and search engine optimization without the dependency overhead of modern frontend frameworks.
+This platform is a high-performance web system designed to serve as a centralized hub for news, editorial articles, and interactive quiz modules. The project employs a lightweight, modular architecture that prioritizes scalability and search engine optimization without the dependency overhead of modern frontend frameworks.
 
 ## **Technical Architecture**
 
@@ -8,7 +8,7 @@ The platform is built on a Stateless Content Delivery model. Rather than utilizi
 
 ### **1\. Discord-Integrated Editorial System**
 
-The platform operates as a community-centric news website where content delivery is bridged through a hybrid integration of static web infrastructure and Discord-driven control. While the structural core of the application logic resides in data/articles.json, the ecosystem is architected to support automated content workflows and real-time interaction between the web portal and community servers. This integration allows for a seamless flow of information from editorial sources directly to the end-user community.
+The platform operates as a community-centric news website where content delivery is bridged through a hybrid integration of static web infrastructure and Discord-driven control. While the structural core of the application logic resides in data/articles.json, the ecosystem is architected to support automated content workflows and real-time interaction between the web portal and community servers.
 
 ### **2\. Component-Based UI Design**
 
@@ -18,7 +18,7 @@ To maintain a DRY (Don't Repeat Yourself) codebase, the project utilizes a custo
 * Context-aware navigation highlighting based on the current directory.  
 * Unified error handling for failed asset loads.
 
-### **3\. Interactive Assessment Engine**
+### **3\. Interactive Quiz Engine**
 
 The quizzes directory contains sophisticated client-side modules that process user input through weighted algorithmic logic. These assessments, including the 2026 Rice Purity Test and Mental Age assessments, are designed to provide immediate feedback through DOM manipulation, ensuring a low-latency user experience.
 
@@ -37,6 +37,13 @@ The project includes a Python integration built on the discord.py library. This 
 * Automated broadcasting of news updates parsed from the site metadata.  
 * Real-time query responses for users searching the article database.  
 * Event-driven logging for community interactions.
+
+## **Bot Commands**
+
+* !post: Initiates a multi-step interactive process to create and publish a new article. It handles headlines, excerpts, authors, categories, quotes, and media uploads (images or YouTube links).
+* !setf <article_id>: Sets a specific article as the "Featured" article and updates the JSON data. 
+* !remove <article_id>: Deletes a specific article from the JSON database and removes its corresponding HTML file. 
+* !update-domain <new_domain>: Standardizes a new domain URL and updates both the domain and Brand Name across all supported file types (.html, .json, .xml, .js, .css, .py) in the project.
 
 ## **Project Directory Structure**
 
