@@ -51,6 +51,8 @@ The project includes a Python integration built on the discord.py library. This 
 
 ## **Project Directory Structure**
 
+![Directory](https://github.com/RealRuthvik/Discord-Bot-Controlled-News-Website/blob/4d940b26f4e1539bf59e6111238b6fba67a60d40/assets/media/image/Screenshot%202026-01-07%20170025.png)
+
 * /articles: Categorized HTML content optimized for read-heavy workloads.  
 * /assets: Centralized repository for modular CSS, functional JavaScript, and optimized media assets.  
 * /components: Reusable HTML fragments for consistent UI across sub-directories.  
