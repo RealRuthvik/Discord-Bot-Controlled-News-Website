@@ -2,6 +2,8 @@
 
 This platform is a high-performance web system designed to serve as a centralized hub for news, editorial articles, and interactive quiz modules. The project employs a lightweight, modular architecture that prioritizes scalability and search engine optimization without the dependency overhead of modern frontend frameworks.
 
+![Demo Home Page](assets/media/image/Screenshot 2026-01-07 165217.png)
+
 ## **Technical Architecture**
 
 The platform is built on a Stateless Content Delivery model. Rather than utilizing a traditional database, the application leverages a structured JSON backbone to manage site-wide metadata, enabling dynamic content rendering on a static infrastructure.
@@ -17,6 +19,8 @@ To maintain a DRY (Don't Repeat Yourself) codebase, the project utilizes a custo
 * Asynchronous fetching of global UI elements such as header.html and footer.html.  
 * Context-aware navigation highlighting based on the current directory.  
 * Unified error handling for failed asset loads.
+
+![Demo Article Page](assets/media/image/Screenshot 2026-01-07 165243.png)
 
 ### **3\. Interactive Quiz Engine**
 
