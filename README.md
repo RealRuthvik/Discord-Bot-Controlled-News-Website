@@ -73,4 +73,4 @@ The bot requires a Python 3.8+ environment:
 
 ## **License and Attribution**
 
-This project is maintained by realruthvik. All content and source code are provided under the MIT License.
+This project is maintained by Ruthvik Reddy Gade (realRuthvik). All content and source code are provided under the MIT License.
