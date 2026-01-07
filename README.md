@@ -2,7 +2,7 @@
 
 This platform is a high-performance web system designed to serve as a centralized hub for news, editorial articles, and interactive quiz modules. The project employs a lightweight, modular architecture that prioritizes scalability and search engine optimization without the dependency overhead of modern frontend frameworks.
 
-![Demo Home Page](assets/media/image/Screenshot 2026-01-07 165217.png)
+![Demo Home Page](https://github.com/RealRuthvik/Discord-Bot-Controlled-News-Website/blob/82fd2466d2b939e072d420ef6b1d0a95d81b902e/assets/media/image/Screenshot%202026-01-07%20165217.png)
 
 ## **Technical Architecture**
 
@@ -20,7 +20,7 @@ To maintain a DRY (Don't Repeat Yourself) codebase, the project utilizes a custo
 * Context-aware navigation highlighting based on the current directory.  
 * Unified error handling for failed asset loads.
 
-![Demo Article Page](assets/media/image/Screenshot 2026-01-07 165243.png)
+![Demo Article Page](https://github.com/RealRuthvik/Discord-Bot-Controlled-News-Website/blob/af0e7049cb59ec71a20be812426f1c3630ec849b/assets/media/image/Screenshot%202026-01-07%20165243.png)
 
 ### **3\. Interactive Quiz Engine**
 
