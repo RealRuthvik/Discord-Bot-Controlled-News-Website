@@ -1,4 +1,4 @@
-## **This project is mostly AI generated slop. I used it to learn how Discord bots work, so expect unreadable or messy code.**
+## **The code for this project is mostly AI generated slop. I used it to learn how Discord bots work, so expect unreadable or messy code.**
 
 # **Discord Bot Controlled News Website: Professional News and Quiz Portal**
 
