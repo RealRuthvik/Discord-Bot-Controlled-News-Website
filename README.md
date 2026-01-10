@@ -79,6 +79,6 @@ The bot requires a Python 3.8+ environment:
 2. Configure the BOT\_TOKEN within the environment variables or the script configuration block.  
 3. Execute via python Discord-Bot.py.
 
-## **License and Attribution**
+## **More AI slop**
 
-This project is maintained by Ruthvik Reddy Gade (realRuthvik). All content and source code are provided under the MIT License.
+This README was AI generated. (Gemini 3 Pro, for those who care.)
