@@ -1,3 +1,5 @@
+## **This project is mostly AI generated slop. I used it to learn how Discord bots work, so expect unreadable or messy code.**
+
 # **Discord Bot Controlled News Website: Professional News and Quiz Portal**
 
 This platform is a high-performance web system designed to serve as a centralized hub for news, editorial articles, and interactive quiz modules. The project employs a lightweight, modular architecture that prioritizes scalability and search engine optimization without the dependency overhead of modern frontend frameworks.
